@@ -87,7 +87,6 @@ button:hover {
             </div>
             
             <button type="submit">Soumettre</button><br>
-            <a href="{{route('register.prof')}}">Vous n'avez pas de compte  ?</a>
         </form>
     </div>
 </body>

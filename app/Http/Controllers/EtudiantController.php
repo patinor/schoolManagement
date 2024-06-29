@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EtudiantRequest;
 use App\Models\Cours;
+use App\Models\Enseignant;
 use App\Models\Etudiant;
+use App\Models\specialite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class EtudiantController extends Controller
@@ -95,6 +98,40 @@ class EtudiantController extends Controller
         $user=session()->get('etudiant');
         $coursAll=Cours::where('enseignant_id',$user[0]->id);
 
-        return view('Etudiant.home',compact('user'));
+        $exercices=specialite::paginate(6);
+        return view('Etudiant.home',compact('user','exercices'));
+    }
+
+
+    public function cours_etudiant($id){
+
+        if(!session()->get('etudiant') && !session()->get('auth')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_etudiant.etudiant.form');
+        }
+        $specialite=specialite::find($id);
+        if(!$specialite){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+        $coursAll = DB::table('cours')
+        ->join('enseignants','enseignants.id','=','cours.enseignant_id')
+        ->join('specialites','specialites.id','enseignants.specialite_id')
+        ->where('enseignants.specialite_id',$id)
+        ->select('cours.*','enseignants.*')->paginate(5);
+
+        $exoAll = DB::table('exercies_cours')
+        ->join('enseignants', 'enseignants.id', '=', 'exercies_cours.enseignant_id')
+        ->join('specialites', 'specialites.id', '=', 'enseignants.specialite_id')
+        ->where('enseignants.specialite_id', $id)
+        ->select('exercies_cours.*')
+        ->paginate(5);
+        $user=session()->get('etudiant');
+        
+    
+
+        return view('Etudiant.cours',compact('coursAll','exoAll','user'));
     }
 }

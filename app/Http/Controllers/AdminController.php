@@ -17,6 +17,7 @@ class AdminController extends Controller
     public function login(){
 
        
+       
         return view('admin.login');
     }
 
@@ -38,7 +39,7 @@ class AdminController extends Controller
 
         toastr()->success('Bienvenue  👋 ! connection reussi');
 
-        return view('admin.home');
+        return redirect()->route('dashboard.admin');
     }
 
     public function dashboard(){

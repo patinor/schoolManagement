@@ -29,7 +29,7 @@ class EnseignantRequest extends FormRequest
             'password'=>'required',
             'password_confirm'=>'required',
             'adresse'=>'nullable',
-            'specialite'=>'required'
+            'specialite_id'=>'required|exists:specialites,id'
 
 
 
@@ -53,11 +53,10 @@ class EnseignantRequest extends FormRequest
             'tel.unique'=>'Le numéro existe déjà dans la base de données',
             'password.required'=>'Le mot de passe ne peut etre vide ❌',
             'password_confirm'=>'Le mot de passe de confirmation ne peut etre vide ❌',
-            'tel.unique'=>'Le numéro est requis dans le formulaire',
+            'tel.required'=>'Le numéro est requis dans le formulaire',
             'email.required'=>'L email est requis dans le formulaire',
-
-
-
+            'specialite_id.required'=>'Veuillez choisir une spécialite',
+            'specialite_id.exists'=>'La spécialite existe dans la base de données !'
         ];
     }
 }

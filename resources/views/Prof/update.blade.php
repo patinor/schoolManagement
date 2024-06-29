@@ -49,16 +49,8 @@ button:hover {
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Bienvenu {{$user[0]->nom}}</h2>
-        <ul>
-            <li><a href="#home">Mes cours</a></li>
-
-            <li><a href="#contact">Mise à jour</a></li>
-            <li><a href="{{route('Prof.home.deconnection')}}">Deconnection</a></li>
-
-        </ul>
-    </div>
+    @include('templates.sidebar_prof')
+    
     <div class="content">
         <div class="header">
             <h1>Dashboard</h1>
@@ -75,40 +67,39 @@ button:hover {
                 </ul>
             </div>
         @endif
-                <form enctype="multipart/form-data" action="{{route('update.account.enseignant')}}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="nom">Nom :</label>
-                        <input type="text" id="nom" name="nom"  value="{{$user[0]->nom}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="prenom">Prénom :</label>
-                        <input type="text" id="prenom" name="prenom" value="{{$user[0]->prenom}}" >
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email :</label>
-                        <input type="email" id="email" name="email" value="{{$user[0]->email}}" >
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="tel">Téléphone :</label>
-                        <input type="tel" id="tel" name="tel" value="{{$user[0]->tel}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="profile">Profil :</label>
-                        <input type="file" id="profile" name="profile" >
-                    </div>
-        
-                    
-                    <div class="form-group">
-                        <label for="adresse">Adresse :</label>
-                        <input type="text" id="adresse" name="adresse" value="{{$user[0]->adresse}}">
-                    </div>
-        
-                    
-                    <input type="hidden" name="id" value="{{$user[0]->id}}">
-                    <button type="submit">Soumettre</button><br>
-                </form>
+        <form enctype="multipart/form-data" action="{{route('create.enseignant')}}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" {{$user[0]->nom}}>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" {{$user[0]->prenom}}>
+            </div>
+            <div class="form-group">
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" {{$user[0]->email}}>
+            </div>
+            
+            <div class="form-group">
+                <label for="tel">Téléphone :</label>
+                <input type="tel" id="tel" name="tel" {{$user[0]->tel}}>
+            </div>
+         
+
+           
+            <div class="form-group">
+                <label for="adresse">Adresse :</label>
+                <input type="text" id="adresse" name="adresse" >
+            </div>
+
+            <div class="form-group">
+                <label for="adresse">Specialite</label>
+                <input type="text" id="adresse" name="specialite" >
+            </div>
+            <button type="submit">Soumettre</button><br>
+        </form>
             </div>
         
         

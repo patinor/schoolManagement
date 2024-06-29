@@ -17,11 +17,9 @@
         </ul>
     </div>
     <div class="content">
-        <div class="header">
-            <h1>Dashboard</h1>
-        </div>
+        
         <div class="main-content">
-            <p>Bienvenue sur le tableau de bord !</p>
+            <p>Listes des cours</p>
             <table class="table">
                 <thead>
                   <tr>
@@ -31,18 +29,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach($exercices as $prof)
+                    @foreach($coursAll as $prof)
                   <tr>
                     <th scope="row">{{$prof->specialite}} </th>
                     <td>{{$prof->created_at}}</td>
                     <td><a href="{{route('cours_etudiant.details',['id'=>$prof->id])}}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
                   </tr>
                     @endforeach
-                </tbody>
+                </tbody>        
               </table>
         </div>
-        {{$exercices->links()}}
+        {{$coursAll->links()}}
+
+
+        
         </div>
+        
     </div>
+    
 </body>
 </html>

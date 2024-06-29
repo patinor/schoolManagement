@@ -114,10 +114,14 @@ button:hover {
 
             <div class="form-group">
                 <label for="adresse">Specialite</label>
-                <input type="text" id="adresse" name="specialite" >
+                <select name="specialite_id" id="">
+                    @foreach($specialite as $spec)
+                    <option value="{{$spec->id}}">{{$spec->specialite}}</option>
+                    @endforeach
+                </select>
             </div>
             <button type="submit">Soumettre</button><br>
-            <a href="{{route('store_enseignant')}}">Vous connecter ?</a>
+            <a href="{{route('login.prof_app')}}">Vous connecter ?</a>
         </form>
     </div>
 </body>

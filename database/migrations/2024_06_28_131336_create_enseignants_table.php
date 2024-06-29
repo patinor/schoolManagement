@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\specialite;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('tel');
             $table->string('profile');
             $table->string('adresse');
-            $table->string('specialite');
+            $table->foreignIdFor(specialite::class);
 
             $table->timestamps();
         });

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EnseignantRequest;
 use App\Models\Cours;
 use App\Models\Enseignant;
+use App\Models\Exercies_cours;
+use App\Models\specialite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +18,8 @@ class EnseignantController extends Controller
 
     public function register(){
 
-        return view('Prof.prof');
+        $specialite=specialite::all();
+        return view('Prof.prof',compact('specialite'));
     }
 
 
@@ -24,7 +27,7 @@ class EnseignantController extends Controller
         session()->forget('authProf');
         session()->forget('prof');
         toastr()->info('A bientot 🖐');
-        return redirect()->route('store_enseignant');
+        return redirect()->route('login.prof_app');
     }
 
 
@@ -42,7 +45,6 @@ class EnseignantController extends Controller
         $etudiant->email=$etudiantRequest->email;
         $etudiant->tel=$etudiantRequest->tel;
         $etudiant->password= Hash::make($etudiantRequest->password) ;
-        $etudiant->specialite=$etudiantRequest->specialite;
 
         $imagePath='';
         if($etudiantRequest->hasFile('profile')){
@@ -50,14 +52,14 @@ class EnseignantController extends Controller
         }
         
         $etudiant->adresse=$etudiantRequest->adresse ? :'';
-        $etudiant->specialite=$etudiantRequest->specialite ? :'';
+        $etudiant->specialite_id=$etudiantRequest->specialite_id;
 
         $etudiant->profile=$imagePath;
         $etudiant->save();
         
         toastr()->success('Compte crée avec succèss !');
 
-        return redirect()->route('store_etudiant.etudiant.form');
+        return redirect()->route('login.prof_app');
 
 
     }
@@ -70,7 +72,7 @@ class EnseignantController extends Controller
             toastr()->warning('Veuillez vous connecter');
             return redirect()->route('store_etudiant.etudiant.form');
         }
-        $user=session()->get('cours');
+        $user=session()->get('prof');
         return view('Prof.cours',compact('user'));
     }
     public function enseignant_update(Request $etudiantRequest){
@@ -166,12 +168,13 @@ class EnseignantController extends Controller
             toastr()->warning('Veuillez vous connecter');
             return redirect()->route('store_enseignant');
         }
-        $user=session()->get('etudiant');
+        $user=session()->get('prof');
         $coursAll=Cours::where('enseignant_id',$user[0]->id)->paginate(5);
-        return view('Prof.home',compact('user','coursAll'));
+        $exerciesAll=Exercies_cours::where('enseignant_id',$user[0]->id)->paginate(5);
+        return view('Prof.home',compact('user','coursAll','exerciesAll'));
     }
 
-    public function store_etudiant()
+    public function login_prof()
 
 
     {
@@ -203,7 +206,7 @@ class EnseignantController extends Controller
             toastr()->warning('Veuillez vous connecter');
             return redirect()->route('store_etudiant.etudiant.form');
         }
-        $user=session()->get('etudiant');
+        $user=session()->get('prof');
         return view("Prof.update",compact('user'));
     }
 
@@ -239,5 +242,27 @@ class EnseignantController extends Controller
         $cours->delete();
         toastr()->success('Cours supprimé avec succèss !');
         return redirect()->route('Prof.home');
+    }
+
+
+    public function addExercice(Request $request){
+        $request->validate([
+             'cours_pdf'=>'required|mimes:pdf',
+             'id'=>'required'
+        ],[
+            'cours_pdf.mimes'=>'Le fichier doit etre de format PDF',
+            'id.required'=>'L opération ne peut etre effectué',
+            'cours_pdf.required'=>'Le fichier est requis dans la base de données',
+        ]);
+
+        $exercice= new Exercies_cours();
+        
+        
+            $exercice->cours_pdf=$request->file('cours_pdf')->store('exo','public');
+            $exercice->enseignant_id=$request->id;
+            $exercice->save();
+            toastr()->info('Exercice ajouté avec succèss!');
+            return back();
+        
     }
 }
