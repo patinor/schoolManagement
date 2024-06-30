@@ -1,94 +1,79 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire Étudiant</title>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 40%;
-}
 
-h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
 
-.form-group {
-    margin-bottom: 15px;
-}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-}
+    <link rel="stylesheet" href="{{asset('/login/fonts/icomoon/style.css')}}">
 
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
+    <link rel="stylesheet" href="{{asset('/login/css/owl.carousel.min.css')}}">
 
-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{asset('/login/css/bootstrap.min.css')}}">
 
-button:hover {
-    background-color: #0056b3;
-}
+    <!-- Style -->
+    <link rel="stylesheet" href="{{asset('/login/css/style.css')}}">
 
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Page de connexion</h1>
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li style="color: red;">{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-        <form action="{{route('create.doLogin')}}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="email">Email :</label>
-                <input type="text" id="email" name="emailOrTel" >
-            </div>
-            <div class="form-group">
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" >
-            </div>
-            
-            <button type="submit">Soumettre</button><br>
-            <a href="{{route('etudiant.form')}}">Vous n'avez pas de compte  ?</a>
-        </form>
+    <title>Login #3</title>
+  </head>
+  <body>
+
+
+  <div class="half">
+    <div class="bg order-1 order-md-2" style="background-image: url('/login/images/bg_1.jpg');"></div>
+    <div class="contents order-2 order-md-1">
+
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-6">
+            <div class="form-block">
+              <div class="text-center mb-5">
+              <h3>Connexion <strong>Etudiant</strong></h3>
+              <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
+              </div>
+              <form action="{{route('create.doLogin')}}" method="POST">
+                @csrf
+                @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li style="color: red;">{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
-</body>
+@endif
+                <div class="form-group first">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control" name="emailOrTel" placeholder="your-email@gmail.com" id="username">
+                </div>
+                <div class="form-group last mb-3">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" name="password" placeholder="Your Password" id="password">
+                </div>
+
+
+                <input type="submit" value="Log In" class="btn btn-block btn-primary">
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>

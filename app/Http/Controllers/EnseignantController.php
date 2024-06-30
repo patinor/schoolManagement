@@ -50,13 +50,13 @@ class EnseignantController extends Controller
         if($etudiantRequest->hasFile('profile')){
             $imagePath=$etudiantRequest->file('profile')->store('prof','public');
         }
-        
+
         $etudiant->adresse=$etudiantRequest->adresse ? :'';
         $etudiant->specialite_id=$etudiantRequest->specialite_id;
 
         $etudiant->profile=$imagePath;
         $etudiant->save();
-        
+
         toastr()->success('Compte crée avec succèss !');
 
         return redirect()->route('login.prof_app');
@@ -64,7 +64,7 @@ class EnseignantController extends Controller
 
     }
 
-    
+
     public function cours_enseignant(){
 
         if(!session()->get('prof') && !session()->get('authProf')){
@@ -77,7 +77,7 @@ class EnseignantController extends Controller
     }
     public function enseignant_update(Request $etudiantRequest){
 
-       
+
         $etudiant = Enseignant::find($etudiantRequest->id);
         if(!$etudiant){
             toastr()->error('Une erreur c est produite !');
@@ -88,19 +88,20 @@ class EnseignantController extends Controller
 
         $etudiant->email=$etudiantRequest->email;
         $etudiant->tel=$etudiantRequest->tel;
-        $etudiant->password= Hash::make($etudiantRequest->password) ;
 
         $imagePath='';
         if($etudiantRequest->hasFile('profile')){
             $imagePath=$etudiantRequest->file('profile')->store('prof','public');
         }
-        
+
         $etudiant->adresse=$etudiantRequest->adresse ? :'';
-        $etudiant->specialite=$etudiantRequest->specialite ? :'';
+        $etudiant->specialite_id=$etudiantRequest->specialite_id ;
 
         $etudiant->profile=$imagePath;
         $etudiant->save();
-        
+
+        session()->forget('prof');
+        session()->put('prof',[$etudiant]);
         toastr()->success('Mise à jour reussi !');
 
         return back();
@@ -138,7 +139,7 @@ class EnseignantController extends Controller
     }
 
 
-    
+
 
     public function addCoursProf(Request $request){
 
@@ -207,7 +208,8 @@ class EnseignantController extends Controller
             return redirect()->route('store_etudiant.etudiant.form');
         }
         $user=session()->get('prof');
-        return view("Prof.update",compact('user'));
+        $specialite=specialite::all();
+        return view("Prof.update",compact('user','specialite'));
     }
 
 
@@ -256,13 +258,13 @@ class EnseignantController extends Controller
         ]);
 
         $exercice= new Exercies_cours();
-        
-        
+
+
             $exercice->cours_pdf=$request->file('cours_pdf')->store('exo','public');
             $exercice->enseignant_id=$request->id;
             $exercice->save();
             toastr()->info('Exercice ajouté avec succèss!');
             return back();
-        
+
     }
 }

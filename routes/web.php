@@ -55,11 +55,15 @@ Route::get('/authentification_admin',[AdminController::class,'login'])->name('ad
 Route::post('/authentification_admin_account',[AdminController::class,'doLogin'])->name('admin.auth.account');
 
 
-Route::get('/dashboard-admin',[AdminController::class,'dashboard'])->name('dashboard.admin');
 
-Route::get('/dashboard-admin-update',[AdminController::class,'update'])->name('update.admin.informations');
-Route::get('/dashboard-deconnection',[AdminController::class,'deconnection'])->name('deconnection.admin.account');
-Route::get('/dashboard-specialite',[AdminController::class,'specialite'])->name('specialite.listes.admin');
 
-Route::post('/dashboard-ajouter_specialite_prof',[AdminController::class,'addSpecialite'])->name('addSpecialite.prof');
 
+Route::middleware(['auth.admin'])->group(function () {
+    Route::get('/dashboard-admin-update',[AdminController::class,'update'])->name('update.admin.informations');
+    Route::get('/dashboard-deconnection',[AdminController::class,'deconnection'])->name('deconnection.admin.account');
+    Route::get('/dashboard-specialite',[AdminController::class,'specialite'])->name('specialite.listes.admin');
+    Route::post('/dashboard-ajouter_specialite_prof',[AdminController::class,'addSpecialite'])->name('addSpecialite.prof');
+    Route::get('/dashboard-admin',[AdminController::class,'dashboard'])->name('dashboard.admin');
+    Route::post('/dashboard-update_account',[AdminController::class,'update_account'])->name('update_account.admin');
+
+});

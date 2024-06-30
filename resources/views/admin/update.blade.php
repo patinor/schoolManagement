@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
-        
+
 
 h1 {
     margin-bottom: 20px;
@@ -49,7 +49,7 @@ button:hover {
     </style>
 </head>
 <body>
-   
+
      @include('templates.sidebar_admin')
     <div class="content">
         <div class="header">
@@ -57,7 +57,7 @@ button:hover {
         </div>
         <div class="main-content">
             <div class="container">
-                <h1>Créer mon compte  Enseignant</h1>
+                <h1>Mise à jour du compte </h1>
                 @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -67,31 +67,34 @@ button:hover {
                 </ul>
             </div>
         @endif
-                <form enctype="multipart/form-data" action="{{route('update.account.enseignant')}}" method="POST">
+                <form enctype="multipart/form-data" action="{{route('update_account.admin')}}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="nom">Nom :</label>
-                        <input type="text" id="nom" name="nom"  value="{{Auth::user()->name}}">
+                        <input type="text" id="nom" name="name"  value="{{Auth::user()->name}}">
                     </div>
-        
+
                     <div class="form-group">
                         <label for="email">Email :</label>
                         <input type="email" id="email" name="email" value="{{Auth::user()->email}}" >
                     </div>
-                    
-                    
-                    
-        
-                    
-                    
-        
-                    
+
+                    <div class="form-group">
+                        <label for="email">Password</label>
+                        <input type="password" id="email" name="password" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Password-confirm</label>
+                        <input type="password" id="email" name="password_confirm" >
+                    </div>
+
                     <input type="hidden" name="id" value="{{Auth::user()->id}}">
                     <button type="submit">Soumettre</button><br>
                 </form>
             </div>
-        
-        
+
+
         </div>
     </div>
 </body>

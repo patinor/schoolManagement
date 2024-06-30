@@ -16,14 +16,14 @@ class AdminController extends Controller
 
     public function login(){
 
-       
-       
+
         return view('admin.login');
     }
 
+
     public function doLogin(Request $request){
 
-       
+
         $credentials=$request->validate([
               'email'=>'required',
               'password'=>'required'
@@ -66,7 +66,7 @@ class AdminController extends Controller
             'specialite'=>'required|unique:specialites,specialite'
         ],[
             'specialite.required'=>'La spécialité est requise',
-            'specialite.unique'=>'La spécialité existe déjà' 
+            'specialite.unique'=>'La spécialité existe déjà'
         ]);
         $specialite= new specialite();
         $specialite->specialite=$request->specialite;
@@ -86,4 +86,36 @@ class AdminController extends Controller
     public function update(){
         return view('admin.update');
     }
+
+
+    public function update_account(Request $request){
+
+        $request->validate([
+
+            'name'=>'required',
+            'email'=>'required',
+            'password'=>'nullable',
+            'password_confirm'=>'nullable',
+            'id'=>'required'
+        ]);
+
+
+        $user =User::find($request->id);
+        $user->name=$request->name;
+        $user->email=$request->email;
+
+        if($request->password){
+            if($request->password != $request->password_confirm){
+
+                toastr()->warning('Les mots de passes sont différents attentions');
+                return back();
+        }
+        $user->password = bcrypt($request->password);
+    }
+
+    $user->save();
+
+    toastr()->success('Compte mise à jour avec succès');
+    return back();
+}
 }
