@@ -24,6 +24,8 @@ Route::get('/', function () {
 Route::get('/etudiant',[EtudiantController::class,'etudiant'])->name('etudiant.form');
 Route::get('/etudiant-login',[EtudiantController::class,'store_etudiant'])->name('store_etudiant.etudiant.form');
 
+Route::get('/etudiant-logout_etudiant',[EtudiantController::class,'logout'])->name('logout.etudiant');
+
 Route::get('/etudiant-home_page',[EtudiantController::class,'home'])->name('home.etudiant.form');
 Route::get('/enseigant-register',[EnseignantController::class,'register'])->name('register.prof');
 Route::post('/enseignant-authentification_login',[EnseignantController::class,'doLogin'])->name('authentification.prof');
@@ -42,12 +44,15 @@ Route::post('/enseignement-ajouter-cours',[EnseignantController::class,'addCours
 Route::get('/enseignement-details-cours/{id}',[EnseignantController::class,'detailsCours'])->name('details.cours.prof');
 Route::post('/enseignement-update-cours',[EnseignantController::class,'updateCours'])->name('updateCours.professeur');
 Route::get('/enseignement-delete-cours/{id}',[EnseignantController::class,'deleteCours'])->name('delete.cours.prof');
+Route::get('/enseignement-update-exercices/{id}',[EnseignantController::class,'editeCoursExo'])->name('edite.CoursExo');
+Route::post('/enseignement-cours-exercices',[EnseignantController::class,'updateCoursExercices'])->name('exercices_pdf.update');
 
 Route::post('/etudiant-authentification',[EtudiantController::class,'doLogin'])->name('create.doLogin');
 Route::post('/etudiant-creation-compte',[EtudiantController::class,'create_etudiant'])->name('create.account.etudiant');
 Route::get('/etudiant-cours_exercices/{id}',[EtudiantController::class,'cours_etudiant'])->name('cours_etudiant.details');
 
 
+Route::get('/etudiant-cours_exercices_vide/{id}',[EtudiantController::class,'cours_etudiant_vue'])->name('cours.etudiant.vue');
 
 // Partie de l administrateur
 Route::get('/authentification_admin',[AdminController::class,'login'])->name('admin.auth');

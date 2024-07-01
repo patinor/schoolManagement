@@ -48,7 +48,7 @@
     </div>
 @endif
                 <div class="form-group first">
-                  <label for="username">Username</label>
+                  <label for="username">Nom</label>
                   <input type="text" class="form-control" name="nom"  id="username">
                 </div>
 

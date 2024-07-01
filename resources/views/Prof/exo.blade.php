@@ -11,65 +11,63 @@
 <body>
    @include('templates.sidebar_prof')
     <div class="content">
-        <div class="header">
-            <h1>Dashboard</h1>
-        </div>
+
+
+
         <div class="main-content">
-            <p>Details du cours </p>
-            <button data-bs-toggle="modal" data-bs-target="#exampleModal">+Modifier</button>
+            <p>Listes des exercices </p>
+            <button  data-bs-toggle="modal" data-bs-target="#secondModal">+Modifier-un-exercices</button>
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Date-creation</th>
-                    <th scope="col">Date-mise-a-jour</th>
-                    <th scope="col">Supprimer</th>
-
+                    <th scope="col">Titre</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Fichier</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">{{$cours->id}} </th>
-                    <td>{{$cours->created_at}}</td>
-                    <td>{{$cours->created_at}}</td>
-                    <td><a href="{{route('delete.cours.prof',['id'=>$cours->id])}}" class="btn btn-danger"><i class="bi bi-trash3"></i></a></td>
 
+                  <tr>
+                    <th scope="row">{{$cours->titre}} </th>
+                    <td>{{$cours->created_at}}</td>
+                    <td><a href="{{ Storage::url($cours->cours_pdf) }}" target="_blank">Voir PDF</a></td>
                   </tr>
 
                 </tbody>
               </table>
         </div>
+
         </div>
+
     </div>
 
+ 
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="secondModal" tabindex="-1" aria-labelledby="secondModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modifier le cours</h1>
+          <h1 class="modal-title fs-5" id="secondModalLabel">Ajouter un exercices</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form enctype="multipart/form-data" method="POST"   action="{{route('updateCours.professeur')}}">
+        <form enctype="multipart/form-data" method="POST" action="{{route('exercices_pdf.update')}}">
                 @csrf
                 <div class="mb-3">
                   <label for="coursCompleted" class="form-label">Titre :</label>
-                  <input type="text" class="form-control" id="coursCompleted" name="titre">
+                  <input type="text" class="form-control" id="coursCompleted" value="{{$cours->titre}}" name="titre">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Cours-vidéo</label>
-                  <input type="file" class="form-control" id="exampleInputEmail1" name="cours">
+                  <input type="file" class="form-control" id="exampleInputEmail1" name="cours_pdf">
                 </div>
-                  <input type="hidden" class="form-control" name="id" value="{{$cours->id}}" id="exampleInputPassword1">
-
+                <input type="hidden" class="form-control" name="id" value="{{$cours->id}}" id="exampleInputPassword1">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
         </div>
-
       </div>
     </div>
   </div>
 </body>
 </html>
+

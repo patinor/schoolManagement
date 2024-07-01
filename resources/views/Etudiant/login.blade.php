@@ -48,8 +48,8 @@
     </div>
 @endif
                 <div class="form-group first">
-                  <label for="username">Username</label>
-                  <input type="text" class="form-control" name="emailOrTel" placeholder="your-email@gmail.com" id="username">
+                  <label for="Identifiant">Identifiant</label>
+                  <input type="text" class="form-control" name="emailOrTel" placeholder="your-email@gmail.com" id="Identifiant">
                 </div>
                 <div class="form-group last mb-3">
                   <label for="password">Password</label>

@@ -11,7 +11,7 @@
 <body>
    @include('templates.sidebar_prof')
     <div class="content">
-      
+
         <div class="main-content">
             <p>Listes de mes cours </p>
             <button data-bs-toggle="modal" data-bs-target="#exampleModal">+Ajouter-un-cours</button>
@@ -55,8 +55,8 @@
                   <tr>
                     <th scope="row">{{$cours->id}} </th>
                     <td>{{$cours->created_at}}</td>
-                    <td><a href="{{ Storage::url($cours->cours_pdf) }}" target="_blank">Télécharger PDF</a></td>
-                    <td><a href="#" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
+                    <td><a href="{{ Storage::url($cours->cours_pdf) }}" target="_blank">Voir PDF</a></td>
+                    <td><a href="{{route('edite.CoursExo',['id'=>$cours->id])}}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
                   </tr>
                     @endforeach
                 </tbody>
@@ -64,20 +64,24 @@
         </div>
         {{$exerciesAll->links()}}
         </div>
-        
+
     </div>
-    
+
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter-un-cours/h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <form enctype="multipart/form-data" method="POST" action="{{route('addCours.Prof')}}">
                 @csrf
+                <div class="mb-3">
+                  <label for="coursCompleted" class="form-label">Titre :</label>
+                  <input type="text" class="form-control" id="coursCompleted" name="titre">
+                </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Cours-vidéo</label>
                   <input type="file" class="form-control" id="exampleInputEmail1" name="cours">
@@ -86,7 +90,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -102,9 +106,15 @@
             <form enctype="multipart/form-data" method="POST" action="{{route('ajouter.exo.cours')}}">
                 @csrf
                 <div class="mb-3">
+                  <label for="coursCompleted" class="form-label">Titre :</label>
+                  <input type="text" class="form-control" id="coursCompleted" name="titre">
+                </div>
+
+                <div class="mb-3">
                   <label for="coursCompleted" class="form-label">Fichier-pdf</label>
                   <input type="file" class="form-control" id="coursCompleted" name="cours_pdf">
                 </div>
+
                 <input type="hidden" class="form-control" name="id" value="{{$user[0]->id}}" id="userIdCompleted">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>

@@ -45,26 +45,26 @@
     </div>
 @endif
                 <div class="form-group first">
-                  <label for="username">Username</label>
-                  <input type="text" class="form-control" name="nom"  id="username">
+                  <label for="Identifiant">Nom</label>
+                  <input type="text" class="form-control" name="nom"  id="Identifiant">
                 </div>
 
                 <div class="form-group first">
-                  <label for="username">Prenom</label>
-                  <input type="text" class="form-control" name="prenom"  id="username">
+                  <label for="Identifiant">Prenom</label>
+                  <input type="text" class="form-control" name="prenom"  id="Identifiant">
                 </div>
 
                 <div class="form-group first">
-                  <label for="username">Email</label>
-                  <input type="email" class="form-control" name="email"  id="username">
+                  <label for="Identifiant">Email</label>
+                  <input type="email" class="form-control" name="email"  id="Identifiant">
                 </div>
                 <div class="form-group first">
-                  <label for="username">Tel</label>
-                  <input type="text" class="form-control" name="tel"  id="username">
+                  <label for="Identifiant">Tel</label>
+                  <input type="text" class="form-control" name="tel"  id="Identifiant">
                 </div>
                 <div class="form-group first">
-                  <label for="username">Adresse</label>
-                  <input type="text" class="form-control" name="adresse"  id="username">
+                  <label for="Identifiant">Adresse</label>
+                  <input type="text" class="form-control" name="adresse"  id="Identifiant">
                 </div>
                 <div class="form-group last mb-3">
                   <label for="password">Spécialité</label>

@@ -12,8 +12,8 @@
     <div class="sidebar">
         <h2>Bienvenu {{$user[0]->nom}}</h2>
         <ul>
-            <li><a href="#home">Mes cours</a></li>
-            <li><a href="#contact">Deconnection</a></li>
+        <li><a href="{{route('home.etudiant.form')}}">Mes cours</a></li>
+        <li><a href="{{route('logout.etudiant')}}">Deconnection</a></li>
         </ul>
     </div>
     <div class="content">
@@ -21,7 +21,7 @@
             <h1>Dashboard</h1>
         </div>
         <div class="main-content">
-            <p>Bienvenue sur le tableau de bord !</p>
+            <p>Choisr le cours de votre choix 👇</p>
             <table class="table">
                 <thead>
                   <tr>

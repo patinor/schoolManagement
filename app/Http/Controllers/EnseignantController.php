@@ -145,12 +145,13 @@ class EnseignantController extends Controller
 
         $request->validate([
               'cours'=>'required',
+              'titre'=>'required',
               'id'=>'required'
         ]);
 
         $cours=new Cours();
         $cours->enseignant_id=$request->id;
-
+        $cours->titre=$request->titre;
         $imagePath='';
         if($request->hasFile('cours')){
             $imagePath=$request->file('cours')->store('cours','public');
@@ -250,6 +251,7 @@ class EnseignantController extends Controller
     public function addExercice(Request $request){
         $request->validate([
              'cours_pdf'=>'required|mimes:pdf',
+             'titre'=>'required',
              'id'=>'required'
         ],[
             'cours_pdf.mimes'=>'Le fichier doit etre de format PDF',
@@ -260,11 +262,53 @@ class EnseignantController extends Controller
         $exercice= new Exercies_cours();
 
 
+        $exercice->titre=$request->titre;
             $exercice->cours_pdf=$request->file('cours_pdf')->store('exo','public');
             $exercice->enseignant_id=$request->id;
             $exercice->save();
             toastr()->info('Exercice ajouté avec succèss!');
             return back();
 
+    }
+
+
+    public function editeCoursExo($id){
+        $cours=Exercies_cours::find($id);
+        if(!$cours){
+            toastr()->error('Cours inexistant dans la base');
+            return back();
+        }
+
+        if(!session()->get('prof') && !session()->get('authProf')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_enseignant');
+        }
+        $user=session()->get('prof');
+
+        return view('Prof.exo',compact('user','cours'));
+    }
+
+
+    public function updateCoursExercices(Request $request ){
+        $cours=Exercies_cours::find($request->id);
+        if(!$cours){
+            toastr()->error('Cours inexistant dans la base');
+            return back();
+        }
+
+        if(!session()->get('prof') && !session()->get('authProf')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_enseignant');
+        }
+        if($request->hasFile('cours')){
+            $cours->cours=$request->file('cours_pdf')->store('cours_pdf','public');
+        }
+        $cours->touch();
+        $cours->titre =$request->titre;
+        $cours->save();
+        toastr()->info('Cours mise à jour avec succèss !');
+        return back();
     }
 }

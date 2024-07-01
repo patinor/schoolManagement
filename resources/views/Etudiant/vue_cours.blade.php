@@ -41,13 +41,15 @@
                 <tbody>
                     @foreach($coursAll as $prof)
                   <tr>
-                  <td >{{$prof->titre}} </td>
+                  <th scope="row">{{$prof->enseignant->specialite->specialite}} </th>
                   <td>
-                  {{$prof->enseignant->specialite->created_at}}
+                  {{$prof->enseignant->specialite->specialite}}
                   <td>
-
-                  <td><a href="{{route('cours.etudiant.vue',['id'=>$prof->id])}}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
-
+                    <video width="640" height="360" controls>
+                            <source src="{{asset('storage/'.$prof->cours)}}" type="video/mp4">
+                            Votre navigateur ne supporte pas la balise vidéo.
+                        </video>
+                    </td>
                   </tr>
                     @endforeach
                 </tbody>
@@ -57,28 +59,7 @@
 
 
 
-        <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Cours</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @foreach($exoAll as $exo)
-                  <tr>
-                    <th scope="row">{{$exo->enseignant->specialite->specialite}} </th>
-                    <th scope="row">{{$exo->enseignant->specialite->created_at}} </th>
-
-                    <td><a href="{{ Storage::url($exo->cours_pdf) }}" target="_blank">Consulter</a></td>
-
-                  </tr>
-                    @endforeach
-                </tbody>
-              </table>
-        </div>
-        {{$exoAll->links()}}
+        
 
         </div>
 

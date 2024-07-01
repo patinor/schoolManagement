@@ -6,6 +6,7 @@ use App\Http\Requests\EtudiantRequest;
 use App\Models\Cours;
 use App\Models\Enseignant;
 use App\Models\Etudiant;
+use App\Models\Exercies_cours;
 use App\Models\specialite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,11 +49,11 @@ class EtudiantController extends Controller
         if($etudiantRequest->hasFile('profile')){
             $imagePath=$etudiantRequest->file('profile')->store('etudiant','public');
         }
-        
+
         $etudiant->adresse=$etudiantRequest->adresse ? :'';
         $etudiant->profile=$imagePath;
         $etudiant->save();
-        
+
         toastr()->success('Compte crée avec succèss !');
 
         return redirect()->route('store_etudiant.etudiant.form');
@@ -116,22 +117,50 @@ class EtudiantController extends Controller
 
             return back();
         }
-        $coursAll = DB::table('cours')
-        ->join('enseignants','enseignants.id','=','cours.enseignant_id')
-        ->join('specialites','specialites.id','enseignants.specialite_id')
-        ->where('enseignants.specialite_id',$id)
-        ->select('cours.*','enseignants.*')->paginate(5);
+        $coursAll = Cours::paginate(5);
 
-        $exoAll = DB::table('exercies_cours')
-        ->join('enseignants', 'enseignants.id', '=', 'exercies_cours.enseignant_id')
-        ->join('specialites', 'specialites.id', '=', 'enseignants.specialite_id')
-        ->where('enseignants.specialite_id', $id)
-        ->select('exercies_cours.*')
-        ->paginate(5);
+        $exoAll = Exercies_cours::paginate(5);
         $user=session()->get('etudiant');
-        
-    
+
+
 
         return view('Etudiant.cours',compact('coursAll','exoAll','user'));
     }
+
+
+    public function logout(){
+
+        session()->forget('etudiant');
+        session()->forget('auth');
+
+        return redirect()->route('store_etudiant.etudiant.form');
+
+
+    }
+
+
+    public function cours_etudiant_vue($id){
+
+        if(!session()->get('etudiant') && !session()->get('auth')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_etudiant.etudiant.form');
+        }
+        $specialite=specialite::find($id);
+        if(!$specialite){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+        $coursAll = Cours::paginate(5);
+
+        $user=session()->get('etudiant');
+
+
+
+        return view('Etudiant.vue_cours',compact('coursAll','user'));
+    }
+
+
+
 }
