@@ -64,11 +64,18 @@ Route::post('/authentification_admin_account',[AdminController::class,'doLogin']
 
 
 Route::middleware(['auth.admin'])->group(function () {
-    Route::get('/dashboard-admin-update',[AdminController::class,'update'])->name('update.admin.informations');
+    Route::get('/dashboard-admin-update',[AdminController::class,'enseignantEdit'])->name('update.admin.informations');
     Route::get('/dashboard-deconnection',[AdminController::class,'deconnection'])->name('deconnection.admin.account');
     Route::get('/dashboard-specialite',[AdminController::class,'specialite'])->name('specialite.listes.admin');
     Route::post('/dashboard-ajouter_specialite_prof',[AdminController::class,'addSpecialite'])->name('addSpecialite.prof');
     Route::get('/dashboard-admin',[AdminController::class,'dashboard'])->name('dashboard.admin');
     Route::post('/dashboard-update_account',[AdminController::class,'update_account'])->name('update_account.admin');
+    Route::post('/dashboard-update_specialite',[AdminController::class,'updateSpecialites'])->name('updateS.pecialites');
+
+    Route::get('/ddetailsSpecialite/{id}',[AdminController::class,'updateSpecialite'])->name('updateSpecialite.details');
+    Route::get('/listesDesETudiants',[AdminController::class,'etudiant'])->name('listes.etudiants');
+    Route::get('/listesDesProfesseur',[AdminController::class,'enseignant'])->name('listes.professeurs');
+
+    Route::get('/logoutAdmin',[AdminController::class,'logoutAdmin'])->name('admin.logout');
 
 });

@@ -1,64 +1,89 @@
-@include('templates.styles')
+
+
+
+
 
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <style>
+<html lang="en">
+
+@include('templates.head_admin')
 
 
-h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-    </style>
-</head>
 <body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    @include('templates.navBar_admin')
 
-     @include('templates.sidebar_admin')
-    <div class="content">
-        <div class="header">
-            <h1>Dashboard</h1>
-        </div>
-        <div class="main-content">
-            <div class="container">
-                <h1>Mise à jour du compte </h1>
-                @if ($errors->any())
+
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+
+    @include('templates.sidebar_admin')
+    <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Details Comptes</h4>
+                  <p class="card-description">
+                  </p>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  +Modifier mes informatinons
+</button>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>
+                            Numéro
+                          </th>
+                          <th>
+                            Nom
+                          </th>
+                          <th>
+                          Email
+                          </th>
+                          <th>
+                          Date-creation
+                          </th>
+                          <th>
+                            Date-Mise-à-jour
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="py-1">
+                          {{Auth::user()->id}}
+                          </td>
+                          <td>
+                          {{Auth::user()->name}}
+                          </td>
+                          <td>
+                          {{Auth::user()->email}}
+                          </td>
+                          <td>
+                          {{Auth::user()->created_at}}
+                          </td>
+                          <td>
+                          {{Auth::user()->created_at}}
+
+                          </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<!-- Button trigger modal -->
+@if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -67,35 +92,67 @@ button:hover {
                 </ul>
             </div>
         @endif
-                <form enctype="multipart/form-data" action="{{route('update_account.admin')}}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="nom">Nom :</label>
-                        <input type="text" id="nom" name="name"  value="{{Auth::user()->name}}">
-                    </div>
 
-                    <div class="form-group">
-                        <label for="email">Email :</label>
-                        <input type="email" id="email" name="email" value="{{Auth::user()->email}}" >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Password</label>
-                        <input type="password" id="email" name="password" >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Password-confirm</label>
-                        <input type="password" id="email" name="password_confirm" >
-                    </div>
-
-                    <input type="hidden" name="id" value="{{Auth::user()->id}}">
-                    <button type="submit">Soumettre</button><br>
-                </form>
-            </div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter une spécialité</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form action="{{route('update_account.admin')}}" method="POST">
+        @csrf
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Nom</label>
+    <input type="text" class="form-control" required id="exampleInputEmail1" value="{{Auth::user()->name}}" name="name">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <input type="email" class="form-control" required id="exampleInputEmail1" value="{{Auth::user()->email}}" name="email">
+  </div>
 
 
-        </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Password</label>
+    <input type="password" class="form-control"  id="exampleInputEmail1" name="password">
+  </div>
+
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Password-confirm</label>
+    <input type="password" class="form-control"  id="exampleInputEmail1"  name="password_confirm">
+  </div>
+    <input type="hidden" class="form-control" value="{{Auth::user()->id}}"   id="exampleInputEmail1" name="id">
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+
+</form>
+      </div>
+
     </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from Bootstrapdash.com</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  @include('templates.js_admin')
+
 </body>
+
 </html>

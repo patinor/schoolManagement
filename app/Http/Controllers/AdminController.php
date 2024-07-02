@@ -16,6 +16,11 @@ class AdminController extends Controller
 
     public function login(){
 
+        /* $user=new User();
+        $user->name='danielLevy';
+        $user->email= 'exemple@gmail.com';
+        $user->password= Hash::make('daniel');
+        $user->save(); */
 
         return view('admin.login');
     }
@@ -26,10 +31,9 @@ class AdminController extends Controller
 
         $credentials=$request->validate([
               'email'=>'required',
-              'password'=>'required'
+              'password'=>'nullable'
         ],[
             'email'=>'L email est requis dans la base de données',
-            'password'=>'Le mot de passe est requis'
         ]);
 
         if(!Auth::attempt($credentials)){
@@ -117,5 +121,77 @@ class AdminController extends Controller
 
     toastr()->success('Compte mise à jour avec succès');
     return back();
+}
+
+public function updateSpecialite($id){
+
+
+    $special=specialite::find($id);
+
+    if(!$special){
+        toastr()->error('Une erreur c est produite ');
+        return back();
+    }
+
+    return view('admin.update_specialite',[
+'special'=>$special
+    ]);
+}
+
+public function updateSpecialites(Request $request){
+
+    $request->validate([
+        'specialite'=>'required|unique:specialites,specialite',
+        'id'=>'required'
+    ],[
+        'specialite.required'=>'La spécialité est requise',
+        'specialite.unique'=>'La spécialité existe déjà'
+    ]);
+    $specialite=specialite::find($request->id);
+
+    if(!$specialite){
+        toastr()->error('Une erreur c est produite ');
+        return back();
+    }
+    $specialite->specialite=$request->specialite;
+    $specialite->save();
+    toastr()->info('Informations  ajouté avec succèss');
+
+    return back();
+}
+
+
+
+public function etudiant(){
+
+
+    $etudiantAll=Etudiant::paginate(5);
+
+    return view('admin.etudiant',[
+        'etudiantAll'=>$etudiantAll
+    ]);
+}
+
+public function enseignant(){
+
+
+    $professeurAll=Enseignant::paginate(5);
+
+    return view('admin.professeur',[
+        'professeurAll'=>$professeurAll
+    ]);
+}
+
+public function logoutAdmin(){
+
+    Auth::logout();
+    toastr()->success('Deconnection reussi à bientot 🖐');
+
+    return redirect()->route('admin.auth');
+}
+public function enseignantEdit(){
+
+
+    return view('admin.update');
 }
 }

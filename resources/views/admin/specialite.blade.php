@@ -1,126 +1,133 @@
-@include('templates.styles')
-
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <style>
-        
+<html lang="en">
 
-h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
+@include('templates.head_admin')
 
-.form-group {
-    margin-bottom: 15px;
-}
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-    </style>
-</head>
 <body>
-   
-     @include('templates.sidebar_admin')
-    <div class="content">
-        <div class="header">
-            <h1>Dashboard</h1>
-        </div>
-        <div class="main-content">
-            <div class="container">
-                <h1>Listes des spécialite</h1>
-                <button data-bs-toggle="modal" data-bs-target="#exampleModal">+Spécialite</button>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    @include('templates.navBar_admin')
 
-                @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li style="color: red;">{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Numéro</th>
-                <th scope="col">Specialite</th>
-                <th scope="col">Date-creation</th>
-                <th scope="col">Details</th>
-              </tr>
-            </thead>
-            <tbody>
-                @foreach($specialiteAll as $special)
-              <tr>
-                <th scope="row"> {{$special->id}} </th>
-                <td>{{$special->specialite}}</td>
-                <td>{{$special->created_at}}</td>
-              </tr>
-              
-              @endforeach
 
-            </tbody>
-          </table>
-            </div>
-            {{$specialiteAll->links()}}
-        
-        </div>
-    </div>
 
-    <!-- Button trigger modal -->
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
 
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">AJouter-une-spécialite</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form enctype="multipart/form-data" action="{{route('addSpecialite.prof')}}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="nom">Specialite</label>
-                    <input type="text" id="nom" name="specialite"  required>
+    @include('templates.sidebar_admin')
+    <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Listes de spcialité</h4>
+                  <p class="card-description">
+                    Add class <code>.Listes de spcialité</code>
+                  </p>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  +ajouter-une-spécialité
+</button>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>
+                            Numéro
+                          </th>
+                          <th>
+                            Nom-spécialite
+                          </th>
+                          <th>
+                           Date de creation
+                          </th>
+                          <th>
+                           Date de mise à jour
+                          </th>
+                          <th>
+                            Details
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach( $specialiteAll as  $special)
+                        <tr>
+                          <td class="py-1">
+                           {{$special->id}}
+                          </td>
+                          <td>
+                          {{$special->specialite}}
+                          </td>
+                          <td>
+                            {{$special->created_at}}
+                          </td>
+                          <td>
+                            Mise à jour
+                          </td>
+                          <td>
+                           <a href="{{route('updateSpecialite.details',['id'=>$special->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
+                          </td>
+
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                    {{$specialiteAll->links()}}
+                  </div>
                 </div>
-                <button type="submit">Soumettre</button><br>
+              </div>
+            </div>
 
-            </form>
-        </div>
-        
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter une spécialité</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form action="{{route('addSpecialite.prof')}}" method="POST">
+        @csrf
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Spécialité</label>
+    <input type="text" class="form-control" required id="exampleInputEmail1" name="specialite">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary">Valider</button>
       </div>
     </div>
   </div>
+</div>
+
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from Bootstrapdash.com</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  @include('templates.js_admin')
+
 </body>
+
 </html>
