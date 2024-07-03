@@ -1,127 +1,146 @@
-@include('templates.styles')
-
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+<html lang="en">
+
+@include('templates.head_admin')
+
+
 <body>
-   @include('templates.sidebar_prof')
-    <div class="content">
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    @include('templates.navbar_prof')
 
-        <div class="main-content">
-            <p>Listes de mes cours </p>
-            <button data-bs-toggle="modal" data-bs-target="#exampleModal">+Ajouter-un-cours</button>
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Date-creation</th>
-                    <th scope="col">Date-mise-a-jour</th>
-                    <th scope="col">Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @foreach($coursAll as $prof)
-                  <tr>
-                    <th scope="row">{{$prof->id}} </th>
-                    <td>{{$prof->created_at}}</td>
-                    <td>{{$prof->created_at}}</td>
-                    <td><a href="{{route('details.cours.prof',['id'=>$prof->id])}}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
-                  </tr>
-                    @endforeach
-                </tbody>
-              </table>
-        </div>
-        {{$coursAll->links()}}
 
-        <div class="main-content">
-            <p>Listes des exercices </p>
-            <button  data-bs-toggle="modal" data-bs-target="#secondModal">+ajouter-un-exercices</button>
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Fichier</th>
-                    <th scope="col">Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @foreach($exerciesAll as $cours)
-                  <tr>
-                    <th scope="row">{{$cours->id}} </th>
-                    <td>{{$cours->created_at}}</td>
-                    <td><a href="{{ Storage::url($cours->cours_pdf) }}" target="_blank">Voir PDF</a></td>
-                    <td><a href="{{route('edite.CoursExo',['id'=>$cours->id])}}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
-                  </tr>
-                    @endforeach
-                </tbody>
-              </table>
-        </div>
-        {{$exerciesAll->links()}}
-        </div>
 
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+
+    @include('templates.sidebar_prof')
+    <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Listes des  Exercices</h4>
+                  <p class="card-description">
+                  </p>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  +ajouter-un-exercice
+</button>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>
+                           Titre
+                          </th>
+                          <th>
+                          PDF
+                          </th>
+                          <th>
+                           Date de creation
+                          </th>
+                          <th>
+                           Date de mise à jour
+                          </th>
+                          <th>
+                            Details
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach( $exerciesAll   as  $special)
+                        <tr>
+                          <td class="py-1">
+                           {{$special->titre}}
+                          </td>
+                          <td>
+                          <a href="{{Storage::url($special->cours_pdf)}}">Voir</a>
+                          </td>
+                          <td>
+                            {{$special->created_at}}
+                          </td>
+                          <td>
+                            Mise à jour
+                          </td>
+                          <td>
+                           <a href="{{route('edite.CoursExo',['id'=>$special->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
+                          </td>
+
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                    {{$exerciesAll->links()}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<!-- Button trigger modal -->
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li style="color: red;">{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
+@endif
+                <div class="form-group first">
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter-un-cours/h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form enctype="multipart/form-data" method="POST" action="{{route('addCours.Prof')}}">
-                @csrf
-                <div class="mb-3">
-                  <label for="coursCompleted" class="form-label">Titre :</label>
-                  <input type="text" class="form-control" id="coursCompleted" name="titre">
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Cours-vidéo</label>
-                  <input type="file" class="form-control" id="exampleInputEmail1" name="cours">
-                </div>
-                <input type="hidden" class="form-control" name="id" value="{{$user[0]->id}}" id="exampleInputPassword1">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-        </div>
 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter une spécialité</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+      <form action="{{route('ajouter.exo.cours')}}" method="POST" enctype="multipart/form-data">
+        @csrf
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Titre</label>
+    <input type="text" class="form-control" required id="exampleInputEmail1" name="titre">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Exercices</label>
+    <input type="file" class="form-control" id="exampleInputEmail1" name="cours_pdf">
+  </div>
+  <input type="hidden" name="id" value="{{$user[0]->id}}">
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+
+</form>
+      </div>
+      <
     </div>
   </div>
+</div>
 
-  <div class="modal fade" id="secondModal" tabindex="-1" aria-labelledby="secondModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="secondModalLabel">Ajouter un exercices</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
         </div>
-        <div class="modal-body">
-            <form enctype="multipart/form-data" method="POST" action="{{route('ajouter.exo.cours')}}">
-                @csrf
-                <div class="mb-3">
-                  <label for="coursCompleted" class="form-label">Titre :</label>
-                  <input type="text" class="form-control" id="coursCompleted" name="titre">
-                </div>
-
-                <div class="mb-3">
-                  <label for="coursCompleted" class="form-label">Fichier-pdf</label>
-                  <input type="file" class="form-control" id="coursCompleted" name="cours_pdf">
-                </div>
-
-                <input type="hidden" class="form-control" name="id" value="{{$user[0]->id}}" id="userIdCompleted">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from Bootstrapdash.com</span>
+          </div>
+        </footer>
+        <!-- partial -->
       </div>
+      <!-- main-panel ends -->
     </div>
+    <!-- page-body-wrapper ends -->
   </div>
+  <!-- container-scroller -->
+  @include('templates.js_admin')
+
 </body>
-</html>
 
+</html>

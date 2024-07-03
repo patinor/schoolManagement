@@ -1,97 +1,111 @@
-@include('templates.styles')
+
 
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <style>
+<html lang="en">
+
+@include('templates.head_admin')
 
 
-h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-    </style>
-</head>
 <body>
-    @include('templates.sidebar_prof')
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    @include('templates.navbar_prof')
 
-    <div class="content">
-        <div class="header">
-            <h1>Dashboard</h1>
-        </div>
-        <div class="main-content">
-            <div class="container">
-                <h1>Mise à jour de mon compte</h1>
-                @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li style="color: red;">{{ $error }}</li>
-                    @endforeach
-                </ul>
+
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+
+    @include('templates.sidebar_prof')
+    <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Details du cours</h4>
+                  <p class="card-description">
+                  </p>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  +Modifier-mes-informations
+</button>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                      <tr>
+                    <th >Nom</th>
+                    <th >Prenom</th>
+                    <th >Email</th>
+                    <th >Tel</th>
+                    <th >Adresse</th>
+
+                  </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                    <th scope="row">{{$user[0]->nom}} </th>
+                    <td>{{$user[0]->prenom}}</td>
+                    <td>{{$user[0]->email}}</td>
+                    <td>{{$user[0]->tel}}</td>
+                    <td>{{$user[0]->adresse}}</td>
+
+                  </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
-        @endif
-        <form enctype="multipart/form-data" action="{{route('update.account.enseignant')}}" method="POST">
+
+<!-- Button trigger modal -->
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li style="color: red;">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+                <div class="form-group first">
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifier mes informations</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form enctype="multipart/form-data" action="{{route('update.account.enseignant')}}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" value="{{$user[0]->nom}}">
+                <input type="text" id="nom" class="form-control" name="nom" value="{{$user[0]->nom}}">
             </div>
             <div class="form-group">
                 <label for="prenom">Prénom :</label>
-                <input type="text" id="prenom" name="prenom" value="{{$user[0]->prenom}}">
+                <input type="text" class="form-control" id="prenom" name="prenom" value="{{$user[0]->prenom}}">
             </div>
             <div class="form-group">
                 <label for="email">Email :</label>
-                <input type="email" id="email" name="email" value="{{$user[0]->email}}">
+                <input type="email" class="form-control" id="email" name="email" value="{{$user[0]->email}}">
             </div>
 
             <div class="form-group">
-                <label for="tel">Téléphone :</label>
-                <input type="tel" id="tel" name="tel" value="{{$user[0]->tel}}">
+                <label for="tel"> Téléphone :</label>
+                <input type="tel" class="form-control" id="tel" name="tel" value="{{$user[0]->tel}}">
             </div>
 
 
 
             <div class="form-group">
                 <label for="adresse">Adresse :</label>
-                <input type="text" id="adresse" value="{{$user[0]->adresse}}" name="adresse" >
+                <input type="text" class="form-control" id="adresse" value="{{$user[0]->adresse}}" name="adresse" >
             </div>
 
             <div class="form-group">
@@ -104,12 +118,25 @@ button:hover {
             </div>
             <input type="hidden" id="adresse" value="{{$user[0]->id}}" name="id" >
 
-            <button type="submit">Soumettre</button><br>
+            <button type="submit" class="btn btn-info">Soumettre</button><br>
         </form>
-            </div>
+      </div>
 
-
-        </div>
     </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  @include('templates.js_admin')
+
 </body>
+
 </html>

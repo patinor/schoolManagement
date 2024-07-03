@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,11 +23,11 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Listes des cours</h4>
+                  <h4 class="card-title">Details Exercices</h4>
                   <p class="card-description">
                   </p>
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  +Ajouter-un-cours
+  +Modifier-un-exercice
 </button>
                   <div class="table-responsive">
                     <table class="table table-striped">
@@ -40,7 +37,7 @@
                            Titre
                           </th>
                           <th>
-                          Voir
+                          PDF
                           </th>
                           <th>
                            Date de creation
@@ -48,16 +45,10 @@
                           <th>
                            Date de mise à jour
                           </th>
-                          <th>
-                            Details
-                          </th>
-                          <th>
-                            Appercu
-                          </th>
+
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($coursAll as $cours)
                         <tr>
                           <td class="py-1">
                            {{ $cours->titre}}
@@ -72,18 +63,10 @@
                           {{ $cours->updated_at}}
                           </td>
 
-                          <td>
-                           <a href="{{route('details.cours.prof',['id'=>$cours->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
-                          </td>
-                          <td>
-                            <a href="{{route('details.Cours.Appercu',['id'=>$cours->id])}}" class="btn btn-info"><i class="bi bi-camera-reels"></i>></a>
-                          </td>
 
                         </tr>
-                        @endforeach
                       </tbody>
                     </table>
-                    {{$coursAll->links()}}
                   </div>
                 </div>
               </div>
@@ -107,11 +90,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter un cours</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter une spécialité</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="{{route('addCours.Prof')}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('exercices_pdf.update')}}" method="POST" enctype="multipart/form-data">
         @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Titre</label>
@@ -119,9 +102,9 @@
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Exercices</label>
-    <input type="file" class="form-control"  id="exampleInputEmail1" name="cours">
+    <input type="file" class="form-control"  id="exampleInputEmail1" name="cours_pdf">
   </div>
-  <input type="hidden" name="id" value="{{ $user[0]->id}}">
+  <input type="hidden" name="id" value="{{ $cours->id}}">
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
       </div>

@@ -35,11 +35,13 @@ Route::get('/enseignant-home',[EnseignantController::class,'home'])->name('Prof.
 Route::get('/enseignant-deconnection',[EnseignantController::class,'deconnection'])->name('Prof.home.deconnection');
 Route::get('/enseignant-update_account',[EnseignantController::class,'update_account'])->name('update_account.account');
 Route::post('/enseignant-register_enseignant_update',[EnseignantController::class,'enseignant_update'])->name('update.account.enseignant');
-Route::get('/enseignant-ajouter_cours',[EnseignantController::class,'cours_enseignant'])->name('ajouter.cours');
+Route::get('/enseignant-listes_cours',[EnseignantController::class,'coursListes'])->name('cours.Listes');
 
 Route::post('/enseignant-ajouter_exercices',[EnseignantController::class,'addExercice'])->name('ajouter.exo.cours');
 
 Route::post('/enseignement-ajouter-cours',[EnseignantController::class,'addCoursProf'])->name('addCours.Prof');
+
+Route::get('/enseignement-details-coursAppercu/{id}',[EnseignantController::class,'detailsCoursAppercu'])->name('details.Cours.Appercu');
 
 Route::get('/enseignement-details-cours/{id}',[EnseignantController::class,'detailsCours'])->name('details.cours.prof');
 Route::post('/enseignement-update-cours',[EnseignantController::class,'updateCours'])->name('updateCours.professeur');

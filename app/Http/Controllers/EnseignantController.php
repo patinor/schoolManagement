@@ -201,6 +201,24 @@ class EnseignantController extends Controller
     }
 
 
+    public function detailsCoursAppercu($id){
+        $cours=Cours::find($id);
+        if(!$cours){
+            toastr()->error('Cours inexistant dans la base');
+            return back();
+        }
+
+        if(!session()->get('prof') && !session()->get('authProf')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_enseignant');
+        }
+        $user=session()->get('prof');
+
+        return view('Prof.apper_cours',compact('user','cours'));
+    }
+
+
     public function update_account(){
 
         if(!session()->get('prof') && !session()->get('authProf')){
@@ -229,6 +247,7 @@ class EnseignantController extends Controller
         if($request->hasFile('cours')){
             $cours->cours=$request->file('cours')->store('cours','public');
         }
+        $cours->titre=$request->titre;
         $cours->touch();
         $cours->save();
         toastr()->info('Cours mise à jour avec succèss !');
@@ -286,7 +305,7 @@ class EnseignantController extends Controller
         }
         $user=session()->get('prof');
 
-        return view('Prof.exo',compact('user','cours'));
+        return view('Prof.details_exo',compact('user','cours'));
     }
 
 
@@ -310,5 +329,20 @@ class EnseignantController extends Controller
         $cours->save();
         toastr()->info('Cours mise à jour avec succèss !');
         return back();
+    }
+
+
+
+    public function coursListes(){
+
+        if(!session()->get('prof') && !session()->get('authProf')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_enseignant');
+        }
+        $user=session()->get('prof');
+        $coursAll=Cours::where('enseignant_id',$user[0]->id)->paginate(5);
+
+        return view('Prof.cours',compact('coursAll','user'));
     }
 }

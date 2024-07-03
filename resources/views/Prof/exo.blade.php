@@ -41,7 +41,7 @@
 
     </div>
 
- 
+
 
   <div class="modal fade" id="secondModal" tabindex="-1" aria-labelledby="secondModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -51,19 +51,19 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <form enctype="multipart/form-data" method="POST" action="{{route('exercices_pdf.update')}}">
-                @csrf
-                <div class="mb-3">
-                  <label for="coursCompleted" class="form-label">Titre :</label>
-                  <input type="text" class="form-control" id="coursCompleted" value="{{$cours->titre}}" name="titre">
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Cours-vidéo</label>
-                  <input type="file" class="form-control" id="exampleInputEmail1" name="cours_pdf">
-                </div>
-                <input type="hidden" class="form-control" name="id" value="{{$cours->id}}" id="exampleInputPassword1">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
+            <form enctype="multipart/form-data" method="POST" action="{{route('exercices_pdf.update')}}">
+                    @csrf
+                    <div class="mb-3">
+                    <label for="coursCompleted" class="form-label">Titre :</label>
+                    <input type="text" class="form-control" id="coursCompleted" value="{{$cours->titre}}" name="titre">
+                    </div>
+                    <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Cours-vidéo</label>
+                    <input type="file" class="form-control" id="exampleInputEmail1" name="cours_pdf">
+                    </div>
+                    <input type="hidden" class="form-control" name="id" value="{{$cours->id}}" id="exampleInputPassword1">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
         </div>
       </div>
     </div>

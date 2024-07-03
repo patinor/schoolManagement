@@ -1,10 +1,38 @@
-<div class="sidebar">
-    <h2>Bienvenu {{$user[0]->nom}}</h2>
-    <ul>
-        <li><a href="/enseignant-home">Home</a></li>
-        <li><a href="{{route('update_account.account')}}">Mise à jour</a></li>
-        <li><a href="{{route('Prof.home.deconnection')}}">Deconnection</a></li>
+ <!-- partial:../../partials/_sidebar.html -->
+ <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <div class="user-profile">
+          <div class="user-image">
+          </div>
+          <div class="user-name">
 
-    </ul>
-</div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+          </div>
+          <div class="user-designation">
+
+          </div>
+        </div>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/enseignant-home">
+              <i class="icon-box menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('cours.Listes')}}">
+              <i class="icon-file menu-icon"></i>
+              <span class="menu-title">Lises des cours</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('Prof.home.deconnection')}}">
+              <i class="icon-command menu-icon"></i>
+              <span class="menu-title">Decconection</span>
+            </a>
+          </li>
+
+
+
+        </ul>
+      </nav>
