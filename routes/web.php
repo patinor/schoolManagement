@@ -36,12 +36,15 @@ Route::get('/enseignant-deconnection',[EnseignantController::class,'deconnection
 Route::get('/enseignant-update_account',[EnseignantController::class,'update_account'])->name('update_account.account');
 Route::post('/enseignant-register_enseignant_update',[EnseignantController::class,'enseignant_update'])->name('update.account.enseignant');
 Route::get('/enseignant-listes_cours',[EnseignantController::class,'coursListes'])->name('cours.Listes');
+Route::get('/etudiant-listesExercices/{id}',[EtudiantController::class,'listesExercices'])->name('listes.Exercices.cours');
 
 Route::post('/enseignant-ajouter_exercices',[EnseignantController::class,'addExercice'])->name('ajouter.exo.cours');
 
 Route::post('/enseignement-ajouter-cours',[EnseignantController::class,'addCoursProf'])->name('addCours.Prof');
 
 Route::get('/enseignement-details-coursAppercu/{id}',[EnseignantController::class,'detailsCoursAppercu'])->name('details.Cours.Appercu');
+Route::get('/listesSoumissionExoEtudiant',[EnseignantController::class,'listesSoumission'])->name('listes.Soumission.prof');
+Route::get('/enseignement-details-soumissions/{id}',[EnseignantController::class,'editeSoumission'])->name('edite.Soumission.etudiant');
 
 Route::get('/enseignement-details-cours/{id}',[EnseignantController::class,'detailsCours'])->name('details.cours.prof');
 Route::post('/enseignement-update-cours',[EnseignantController::class,'updateCours'])->name('updateCours.professeur');
@@ -52,9 +55,14 @@ Route::post('/enseignement-cours-exercices',[EnseignantController::class,'update
 Route::post('/etudiant-authentification',[EtudiantController::class,'doLogin'])->name('create.doLogin');
 Route::post('/etudiant-creation-compte',[EtudiantController::class,'create_etudiant'])->name('create.account.etudiant');
 Route::get('/etudiant-cours_exercices/{id}',[EtudiantController::class,'cours_etudiant'])->name('cours_etudiant.details');
+Route::post('/enseignement-ajouter-correction-soumis',[EnseignantController::class,'updateCourSoumission'])->name('update.Cour.Soumission');
 
+
+Route::post('/soumissionDevoir',[EtudiantController::class,'soumettreExerices'])->name('soumettre.Exerices');
 
 Route::get('/etudiant-cours_exercices_vide/{id}',[EtudiantController::class,'cours_etudiant_vue'])->name('cours.etudiant.vue');
+Route::get('/etudiant-cours_video_etudiant/{id}',[EtudiantController::class,'listesVideo'])->name('listes.Video');
+Route::get('/etudiant-listesDocumentSoumis',[EtudiantController::class,'listesSoumission'])->name('listes.Soumission');
 
 // Partie de l administrateur
 Route::get('/authentification_admin',[AdminController::class,'login'])->name('admin.auth');

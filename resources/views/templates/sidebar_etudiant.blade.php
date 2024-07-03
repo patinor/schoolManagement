@@ -12,30 +12,22 @@
         </div>
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="/enseignant-home">
+            <a class="nav-link" href="/etudiant-home_page">
               <i class="icon-box menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{{route('cours.Listes')}}">
-              <i class="icon-file menu-icon"></i>
-              <span class="menu-title">Lises des cours</span>
+            <a class="nav-link" href="{{route('listes.Soumission')}}">
+              <i class="icon-pie-graph menu-icon"></i>
+              <span class="menu-title">Listes des exercices soumis</span>
             </a>
           </li>
-
           <li class="nav-item">
-            <a class="nav-link" href="{{route('listes.Soumission.prof')}}">
-              <i class="icon-file menu-icon"></i>
-              <span class="menu-title">Soumission des exos</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('Prof.home.deconnection')}}">
+            <a class="nav-link" href="{{route('logout.etudiant')}}">
               <i class="icon-command menu-icon"></i>
-              <span class="menu-title">Decconection</span>
+              <span class="menu-title">Deconnection</span>
             </a>
           </li>
 

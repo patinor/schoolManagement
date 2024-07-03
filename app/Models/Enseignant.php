@@ -20,7 +20,9 @@ class Enseignant extends Model
     public function cours():HasMany {
         return $this ->hasMany(cours::class);
     }
-
+    public function correctionEtudiant():HasMany {
+        return $this->hasMany(CorrectionEtudiant::class);
+    }
 
 
     public function exercice_cours():HasMany{

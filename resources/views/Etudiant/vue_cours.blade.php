@@ -1,27 +1,65 @@
-@include('templates.styles')
+
 
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+<html lang="en">
+
+@include('templates.head_admin')
+
+
 <body>
-    <div class="sidebar">
-        <h2>Bienvenu {{$user[0]->nom}}</h2>
-        <ul>
-            <li><a href="{{route('home.etudiant.form')}}">Mes cours</a></li>
-            <li><a href="{{route('logout.etudiant')}}">Deconnection</a></li>
-        </ul>
-    </div>
-    <div class="content">
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    @include('templates.navbar_etudiant')
 
-        <div class="main-content">
-            <p>Listes des cours en vidéo</p>
 
-            @if ($errors->any())
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+
+    @include('templates.sidebar_etudiant')
+    <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Cours vidéo</h4>
+                  <p class="card-description">
+
+                  </p>
+          <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                      <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Date-creation</th>
+                    <th scope="col">Consulter</th>
+                  </tr>
+                      </thead>
+                      <tbody>
+
+                  <tr>
+                    <th scope="row">{{$cours->titre}} </th>
+                    <td>{{$cours->created_at}}</td>
+                    <td>
+                    <video width="320" height="240" controls>
+                <source src="{{asset('storage/'.$cours->cours)}}" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<!-- Button trigger modal -->
+@if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -30,40 +68,23 @@
         </ul>
     </div>
 @endif
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Titre</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Cours</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @foreach($coursAll as $prof)
-                  <tr>
-                  <th scope="row">{{$prof->enseignant->specialite->specialite}} </th>
-                  <td>
-                  {{$prof->enseignant->specialite->specialite}}
-                  <td>
-                    <video width="640" height="360" controls>
-                            <source src="{{asset('storage/'.$prof->cours)}}" type="video/mp4">
-                            Votre navigateur ne supporte pas la balise vidéo.
-                        </video>
-                    </td>
-                  </tr>
-                    @endforeach
-                </tbody>
-              </table>
-        </div>
-        {{$coursAll->links()}}
+                <div class="form-group first">
 
 
-
-        
 
         </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
 
+      </div>
+      <!-- main-panel ends -->
     </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  @include('templates.js_admin')
 
 </body>
+
 </html>

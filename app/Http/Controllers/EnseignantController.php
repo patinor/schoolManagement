@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EnseignantRequest;
+use App\Models\CorrectionEtudiant;
 use App\Models\Cours;
 use App\Models\Enseignant;
 use App\Models\Exercies_cours;
@@ -344,5 +345,81 @@ class EnseignantController extends Controller
         $coursAll=Cours::where('enseignant_id',$user[0]->id)->paginate(5);
 
         return view('Prof.cours',compact('coursAll','user'));
+    }
+
+
+    public function listesSoumission(){
+
+        if(!session()->get('etudiant') && !session()->get('auth')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_etudiant.etudiant.form');
+        }
+        $user=session()->get('prof');
+        $cours= CorrectionEtudiant::paginate(5);
+
+        if(!$cours){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+
+        if(!$cours){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+
+        return view('Prof.soumission',compact('cours','user'));
+
+    }
+
+
+
+
+    public function editeSoumission($id){
+        if(!session()->get('etudiant') && !session()->get('auth')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_etudiant.etudiant.form');
+        }
+        $user=session()->get('prof');
+        $cours= CorrectionEtudiant::find($id);
+
+        if(!$cours){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+
+        if(!$cours){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+
+        return view('Prof.details_soumission',compact('user','cours'));
+    }
+
+
+   public function updateCourSoumission(Request $request ){
+        $cours=CorrectionEtudiant::find($request->id);
+        if(!$cours){
+            toastr()->error('Cours inexistant dans la base');
+            return back();
+        }
+
+        if(!session()->get('prof') && !session()->get('authProf')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_enseignant');
+        }
+        if($request->hasFile('correction')){
+            $cours->correction=$request->file('correction')->store('correction','public');
+        }
+        $cours->touch();
+        $cours->save();
+        toastr()->info('Cours mise à jour avec succèss !');
+        return back();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EtudiantRequest;
+use App\Models\CorrectionEtudiant;
 use App\Models\Cours;
 use App\Models\Enseignant;
 use App\Models\Etudiant;
@@ -138,6 +139,32 @@ class EtudiantController extends Controller
 
     }
 
+    public function listesSoumission(){
+
+        if(!session()->get('etudiant') && !session()->get('auth')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_etudiant.etudiant.form');
+        }
+        $user=session()->get('etudiant');
+        $cours= CorrectionEtudiant::where('etudiant_id',$user[0]->id)->paginate(5);
+
+        if(!$cours){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+
+        if(!$cours){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+
+        return view('Etudiant.soumis',compact('cours','user'));
+
+    }
+
 
     public function cours_etudiant_vue($id){
 
@@ -152,15 +179,98 @@ class EtudiantController extends Controller
 
             return back();
         }
-        $coursAll = Cours::paginate(5);
+        $cours= Cours::find($id);
+
+        if(!$cours){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
 
         $user=session()->get('etudiant');
 
 
 
-        return view('Etudiant.vue_cours',compact('coursAll','user'));
+        return view('Etudiant.vue_cours',compact('cours','user'));
+    }
+
+
+    public function listesExercices($id){
+        if(!session()->get('etudiant') && !session()->get('auth')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_etudiant.etudiant.form');
+        }
+        $specialite=specialite::find($id);
+        if(!$specialite){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+        $coursAll = DB::table('exercies_cours')
+        ->join('enseignants','enseignants.id','=','exercies_cours.enseignant_id')
+        ->join('specialites','specialites.id','=','enseignants.specialite_id')
+        ->where('enseignants.specialite_id','=', $id)
+        ->select('exercies_cours.*')
+        ->paginate(2)
+        ;
+
+        $specialite=specialite::find($id);
+        $user=session()->get('etudiant');
+
+        return view('Etudiant.exercice',compact('coursAll','user','specialite'));
+    }
+
+
+    public function soumettreExerices(Request $request){
+
+        $request->validate([
+            'etudiant_id'=>'required',
+            'specialite_id'=>'required',
+            "document"=>'required|mimes:pdf'
+        ],[
+            'document.mimes'=>'Le document doit etre de type PDF 📄'
+        ]);
+
+        $correctionSend= new CorrectionEtudiant();
+        $correctionSend->specialite_id	=$request->specialite_id;
+        $correctionSend->etudiant_id	=$request->etudiant_id;
+        if($request->hasFile('doc_soumis')){
+            $correctionSend->doc_soumis	=$request->file('doc_soumis')->store("correction",'public');
+        }
+
+        $correctionSend->save();
+        toastr()->info('Votre document à été soumis pour une correction veuillez ');
+
+        return back();
     }
 
 
 
+
+    public function listesVideo($id){
+        if(!session()->get('etudiant') && !session()->get('auth')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_etudiant.etudiant.form');
+        }
+        $specialite=specialite::find($id);
+        if(!$specialite){
+            toastr()->warning('Veuillez vous connecter');
+
+            return back();
+        }
+        $coursAll = DB::table('cours')
+        ->join('enseignants','enseignants.id','=','cours.enseignant_id')
+        ->join('specialites','specialites.id','=','enseignants.specialite_id')
+        ->where('enseignants.specialite_id','=', $id)
+        ->select('cours.*')
+        ->paginate(2)
+        ;
+
+        $specialite=specialite::find($id);
+        $user=session()->get('etudiant');
+
+        return view('Etudiant.cours',compact('coursAll','user','specialite'));
+    }
 }

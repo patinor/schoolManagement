@@ -9,14 +9,14 @@
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
-    @include('templates.navbar_etudiant')
+    @include('templates.navbar_prof')
 
 
 
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
 
-    @include('templates.sidebar_etudiant')
+    @include('templates.sidebar_prof')
     <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -25,47 +25,46 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Listes des Cours-vidéos de {{$specialite->specialite}} </h4>
+                  <h4 class="card-title">Listes des correction des doc soumis </h4>
                   <p class="card-description">
-
-                  </p>
+              </p>
           <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                       <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Date-creation</th>
-                    <th scope="col">Consulter</th>
+                    <th scope="col">Correction</th>
+                    <th scope="col">Details</th>
+
                   </tr>
                       </thead>
                       <tbody>
-                      @foreach($coursAll as $prof)
+                      @foreach($cours as $prof)
                   <tr>
-                    <th scope="row">{{$prof->titre}} </th>
-                    <td>{{$prof->created_at}}</td>
-                    <td><a href="{{route('cours.etudiant.vue',['id'=>$prof->id])}}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
+                  <th scope="row">{{optional($prof->enseignant)->nom}} </th>
+                  <td>{{$prof->updated_at}}</td>
+                    <td><img src="{{asset('storage/'.$prof->correction)}}" ></td>
+                    <td>
+                    <a href="{{route('edite.Soumission.etudiant',['id'=>$prof->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
+
+                    </td>
                   </tr>
                     @endforeach
                 </tbody>
               </table>
         </div>
-        {{$coursAll->links()}}
+        {{$cours->links()}}
                   </div>
                 </div>
               </div>
             </div>
 
-<!-- Button trigger modal -->
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li style="color: red;">{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
                 <div class="form-group first">
+
+
+<!-- Modal -->
 
 
 
