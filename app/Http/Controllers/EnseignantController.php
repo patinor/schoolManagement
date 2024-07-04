@@ -378,10 +378,10 @@ class EnseignantController extends Controller
 
 
     public function editeSoumission($id){
-        if(!session()->get('etudiant') && !session()->get('auth')){
+        if(!session()->get('prof') && !session()->get('auth')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
+            return redirect()->route('store_enseignant');
         }
         $user=session()->get('prof');
         $cours= CorrectionEtudiant::find($id);

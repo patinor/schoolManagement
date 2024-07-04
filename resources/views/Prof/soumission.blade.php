@@ -44,7 +44,7 @@
                   <tr>
                   <th scope="row">{{optional($prof->enseignant)->nom}} </th>
                   <td>{{$prof->updated_at}}</td>
-                    <td><img src="{{asset('storage/'.$prof->correction)}}" ></td>
+                    <td><a href="{{Storage::url($prof->correction)}}" target="_blank">Voir<a/></td>
                     <td>
                     <a href="{{route('edite.Soumission.etudiant',['id'=>$prof->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
 

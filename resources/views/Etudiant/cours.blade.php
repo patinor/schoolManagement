@@ -55,17 +55,7 @@
               </div>
             </div>
 
-<!-- Button trigger modal -->
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li style="color: red;">{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-                <div class="form-group first">
+<!-- Button trigger modal -->          <div class="form-group first">
 
 
 

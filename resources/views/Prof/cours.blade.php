@@ -115,7 +115,7 @@
         @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Titre</label>
-    <input type="text" class="form-control" required id="exampleInputEmail1" value="{{ $cours->titre}}" name="titre">
+    <input type="text" class="form-control" required id="exampleInputEmail1"  name="titre">
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Exercices</label>
