@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('tel');
             $table->string('profile');
+            $table->string('piece')->nullable();
             $table->string('adresse');
             $table->foreignIdFor(specialite::class);
 

@@ -20,10 +20,7 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
 
-          <li class="nav-item dropdown d-flex">
-            <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-              <i class="icon-air-play mx-0"></i>
-            </a>
+        
 
           </li>
           <li class="nav-item dropdown d-flex mr-4 ">

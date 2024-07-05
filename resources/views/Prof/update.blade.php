@@ -29,9 +29,9 @@
                   <p class="card-description">
                   </p>
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  +Modifier-mes-informations
-</button>
-                  <div class="table-responsive">
+                            +Modifier-mes-informations
+                            </button>
+                        <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                       <tr>
@@ -77,8 +77,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifier mes informations</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h4 class="modal-title fs-5" id="staticBackdropLabel">Modifier mes informations</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Fermer</button>
       </div>
       <div class="modal-body">
       <form enctype="multipart/form-data" action="{{route('update.account.enseignant')}}" method="POST">
@@ -101,7 +101,15 @@
                 <input type="tel" class="form-control" id="tel" name="tel" value="{{$user[0]->tel}}">
             </div>
 
+            <div class="form-group">
+                <label for="tel"> Profile</label>
+                <input type="file" class="form-control" id="tel" name="profile" >
+            </div>
 
+            <div class="form-group">
+                <label for="tel"> Piece identité Ex: Passe-Port, carte-sejour ...</label>
+                <input type="file" class="form-control" id="tel" name="piece" >
+            </div>
 
             <div class="form-group">
                 <label for="adresse">Adresse :</label>

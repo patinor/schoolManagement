@@ -36,14 +36,14 @@
               <form enctype="multipart/form-data" action="{{route('create.enseignant')}}" method="POST">
               @csrf
               @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li style="color: red;">{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li style="color: red;">{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                 <div class="form-group first">
                   <label for="Identifiant">Nom</label>
                   <input type="text" class="form-control" name="nom"  id="Identifiant">
@@ -75,11 +75,11 @@
                  </select>
                 </div>
                 <div class="form-group last mb-3">
-                  <label for="password">Password</label>
+                  <label for="password">Mot-de-passe</label>
                   <input type="password" class="form-control" name="password" id="password">
                 </div>
                 <div class="form-group last mb-3">
-                  <label for="password">Password-confirmation</label>
+                  <label for="password">Mot-de-passe-de-confirmation</label>
                   <input type="password" class="form-control" name="password_confirm" >
                 </div>
 

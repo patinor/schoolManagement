@@ -13,7 +13,7 @@
         <ul class="nav">
           <li class="nav-item">
             <a class="nav-link" href="/dashboard-admin">
-              <i class="icon-box menu-icon"></i>
+            <i class="bi bi-house"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>

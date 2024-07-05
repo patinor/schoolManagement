@@ -1,45 +1,44 @@
- <!-- partial:../../partials/_sidebar.html -->
- <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="user-profile">
-          <div class="user-image">
-          </div>
-          <div class="user-name">
-
-          </div>
-          <div class="user-designation">
-
-          </div>
+<!-- partial:../../partials/_sidebar.html -->
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div class="user-profile">
+        <div class="user-image">
+            <img src="{{ asset('storage/' . session()->get('prof')[0]->profile) }}" alt="">
         </div>
-        <ul class="nav">
-          <li class="nav-item">
+        <div class="user-name">
+            <!-- User name goes here -->
+        </div>
+        <div class="user-designation">
+            <!-- User designation goes here -->
+        </div>
+    </div>
+    <ul class="nav">
+        <li class="nav-item">
             <a class="nav-link" href="/enseignant-home">
-              <i class="icon-box menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
+            <i class="bi bi-house"></i>
+                <span class="menu-title">Dashboard</span>
             </a>
-          </li>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('cours.Listes')}}">
-              <i class="icon-file menu-icon"></i>
-              <span class="menu-title">Lises des cours</span>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('cours.Listes') }}">
+            <i class="bi bi-backpack4"></i>
+                <span class="menu-title">Listes des cours</span>
             </a>
-          </li>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('listes.Soumission.prof')}}">
-              <i class="icon-file menu-icon"></i>
-              <span class="menu-title">Soumission des exos</span>
+       
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('listes.Soumission.prof') }}">
+            <i class="bi bi-send"></i>
+                <span class="menu-title">Soumission des exos</span>
             </a>
-          </li>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('Prof.home.deconnection')}}">
-              <i class="icon-command menu-icon"></i>
-              <span class="menu-title">Decconection</span>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('Prof.home.deconnection') }}">
+            <i class="bi bi-power"></i>
+                <span class="menu-title">Déconnexion</span>
             </a>
-          </li>
-
-
-
-        </ul>
-      </nav>
+        </li>
+    </ul>
+</nav>

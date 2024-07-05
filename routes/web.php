@@ -41,6 +41,9 @@ Route::get('/etudiant-listesExercices/{id}',[EtudiantController::class,'listesEx
 Route::post('/enseignant-ajouter_exercices',[EnseignantController::class,'addExercice'])->name('ajouter.exo.cours');
 
 Route::post('/enseignement-ajouter-cours',[EnseignantController::class,'addCoursProf'])->name('addCours.Prof');
+Route::post('/enseignement-recherche-exercices',[EnseignantController::class,'searchExercices'])->name('search.Exercices.prof');
+Route::post('/enseignement-recherche-cours',[EnseignantController::class,'Searchcours'])->name('Search.cours.details');
+
 
 Route::get('/enseignement-details-coursAppercu/{id}',[EnseignantController::class,'detailsCoursAppercu'])->name('details.Cours.Appercu');
 Route::get('/listesSoumissionExoEtudiant',[EnseignantController::class,'listesSoumission'])->name('listes.Soumission.prof');

@@ -34,7 +34,7 @@
                       <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Date-creation</th>
-                    <th scope="col">Correction</th>
+                    <th scope="col">Exercices-soumis</th>
                     <th scope="col">Details</th>
 
                   </tr>
@@ -42,7 +42,7 @@
                       <tbody>
                       @foreach($cours as $prof)
                   <tr>
-                  <th scope="row">{{optional($prof->enseignant)->nom}} </th>
+                  <th scope="row">{{optional($prof->etudiant)->nom}} </th>
                   <td>{{$prof->updated_at}}</td>
                     <td><a href="{{Storage::url($prof->correction)}}" target="_blank">Voir<a/></td>
                     <td>

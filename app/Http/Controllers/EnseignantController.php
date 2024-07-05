@@ -39,24 +39,24 @@ class EnseignantController extends Controller
             toastr()->error('Les mots de passes sont diffents');
             return back();
         }
-        $etudiant = new Enseignant();
-        $etudiant->nom=$etudiantRequest->nom;
-        $etudiant->prenom=$etudiantRequest->prenom;
+        $enseignant= new Enseignant();
+        $enseignant->nom=$etudiantRequest->nom;
+        $enseignant->prenom=$etudiantRequest->prenom;
 
-        $etudiant->email=$etudiantRequest->email;
-        $etudiant->tel=$etudiantRequest->tel;
-        $etudiant->password= Hash::make($etudiantRequest->password) ;
+        $enseignant->email=$etudiantRequest->email;
+        $enseignant->tel=$etudiantRequest->tel;
+        $enseignant->password= Hash::make($etudiantRequest->password) ;
 
         $imagePath='';
         if($etudiantRequest->hasFile('profile')){
             $imagePath=$etudiantRequest->file('profile')->store('prof','public');
         }
 
-        $etudiant->adresse=$etudiantRequest->adresse ? :'';
-        $etudiant->specialite_id=$etudiantRequest->specialite_id;
+        $enseignant->adresse=$etudiantRequest->adresse ? :'';
+        $enseignant->specialite_id=$etudiantRequest->specialite_id;
 
-        $etudiant->profile=$imagePath;
-        $etudiant->save();
+        $enseignant->profile=$imagePath;
+        $enseignant->save();
 
         toastr()->success('Compte crée avec succèss !');
 
@@ -79,30 +79,35 @@ class EnseignantController extends Controller
     public function enseignant_update(Request $etudiantRequest){
 
 
-        $etudiant = Enseignant::find($etudiantRequest->id);
-        if(!$etudiant){
+        $enseignant = Enseignant::find($etudiantRequest->id);
+        if(!$enseignant){
             toastr()->error('Une erreur c est produite !');
             return back();
         }
-        $etudiant->nom=$etudiantRequest->nom;
-        $etudiant->prenom=$etudiantRequest->prenom;
+        $enseignant->nom=$etudiantRequest->nom;
+        $enseignant->prenom=$etudiantRequest->prenom;
 
-        $etudiant->email=$etudiantRequest->email;
-        $etudiant->tel=$etudiantRequest->tel;
+        $enseignant->email=$etudiantRequest->email;
+        $enseignant->tel=$etudiantRequest->tel;
 
         $imagePath='';
         if($etudiantRequest->hasFile('profile')){
             $imagePath=$etudiantRequest->file('profile')->store('prof','public');
         }
 
-        $etudiant->adresse=$etudiantRequest->adresse ? :'';
-        $etudiant->specialite_id=$etudiantRequest->specialite_id ;
 
-        $etudiant->profile=$imagePath;
-        $etudiant->save();
+        if($etudiantRequest->hasFile('pice')){
+            $et=$etudiantRequest->file('pice')->store('prof','public');
+        }
+
+        $enseignant->adresse=$etudiantRequest->adresse ? :'';
+        $enseignant->specialite_id=$etudiantRequest->specialite_id ;
+
+        $enseignant->profile=$imagePath;
+        $enseignant->save();
 
         session()->forget('prof');
-        session()->put('prof',[$etudiant]);
+        session()->put('prof',[$enseignant]);
         toastr()->success('Mise à jour reussi !');
 
         return back();
@@ -120,20 +125,20 @@ class EnseignantController extends Controller
             'password.required'=>'Le mot de passe ne peut etre vide'
         ]);
 
-        $etudiant =Enseignant::where('email',$request->emailOrTel)->orWhere('tel',$request->emailOrTel)->first();
+        $enseignant =Enseignant::where('email',$request->emailOrTel)->orWhere('tel',$request->emailOrTel)->first();
 
-        if(!$etudiant){
+        if(!$enseignant){
             toastr()->warning('Vos informations sont incorrect 1');
             return back();
         }
 
-        if(!Hash::check($request->password,$etudiant->password)){
+        if(!Hash::check($request->password,$enseignant->password)){
             toastr()->warning('Vos informations sont incorrect 2');
             return back();
         }
 
         toastr()->info('Connection reussie');
-        session()->put('prof',[$etudiant]);
+        session()->put('prof',[$enseignant]);
         session()->put('authProf',true);
 
         return redirect()->route('Prof.home');
@@ -169,12 +174,11 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('authProf')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_enseignant');
+            return redirect()->route('login.prof_app');
         }
         $user=session()->get('prof');
-        $coursAll=Cours::where('enseignant_id',$user[0]->id)->paginate(5);
         $exerciesAll=Exercies_cours::where('enseignant_id',$user[0]->id)->paginate(5);
-        return view('Prof.home',compact('user','coursAll','exerciesAll'));
+        return view('Prof.home',compact('user','exerciesAll'));
     }
 
     public function login_prof()
@@ -225,7 +229,7 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('authProf')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
+            return redirect()->route('login.prof_app');
         }
         $user=session()->get('prof');
         $specialite=specialite::all();
@@ -243,7 +247,7 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('authProf')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_enseignant');
+            return redirect()->route('login.prof_app');
         }
         if($request->hasFile('cours')){
             $cours->cours=$request->file('cours')->store('cours','public');
@@ -261,6 +265,7 @@ class EnseignantController extends Controller
         $cours=Cours::find($id);
         if(!$cours){
             toastr()->warning('Le cours est inexistant');
+            return back();
         }
         $cours->delete();
         toastr()->success('Cours supprimé avec succèss !');
@@ -302,7 +307,7 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('authProf')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_enseignant');
+            return redirect()->route('login.prof_app');
         }
         $user=session()->get('prof');
 
@@ -320,7 +325,7 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('authProf')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_enseignant');
+            return redirect()->route('login.prof_app');
         }
         if($request->hasFile('cours')){
             $cours->cours=$request->file('cours_pdf')->store('cours_pdf','public');
@@ -339,7 +344,7 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('authProf')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_enseignant');
+            return redirect()->route('login.prof_app');
         }
         $user=session()->get('prof');
         $coursAll=Cours::where('enseignant_id',$user[0]->id)->paginate(5);
@@ -353,10 +358,10 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('auth')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_enseignant');
+            return redirect()->route('login.prof_app');
         }
         $user=session()->get('prof');
-        $cours= CorrectionEtudiant::paginate(5);
+        $cours= CorrectionEtudiant::orderBy('id','DESC')->paginate(5);
 
         if(!$cours){
             toastr()->warning('Veuillez vous connecter');
@@ -381,7 +386,7 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('auth')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_enseignant');
+            return redirect()->route('login.prof_app');
         }
         $user=session()->get('prof');
         $cours= CorrectionEtudiant::find($id);
@@ -412,7 +417,7 @@ class EnseignantController extends Controller
         if(!session()->get('prof') && !session()->get('authProf')){
 
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_enseignant');
+            return redirect()->route('login.prof_app');
         }
         if($request->hasFile('correction')){
             $cours->correction=$request->file('correction')->store('correction','public');
@@ -422,4 +427,47 @@ class EnseignantController extends Controller
         toastr()->info('Cours mise à jour avec succèss !');
         return back();
     }
+
+
+    public function searchExercices(Request $request){
+        $request->validate([
+             'search'=>'required'
+        ]);
+        if(!session()->get('prof') && !session()->get('authProf')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('login.prof_app');
+        }
+        $user=session()->get('prof');
+        $exerciesAll=Exercies_cours::where('enseignant_id',$user[0]->id)
+        ->where('titre','LIKE','%'.$request->search.'%')
+        ->OrWhere('created_at','LIKE','%'.$request->search.'%')
+        ->
+        paginate(5);
+        return view('Prof.home',compact('user','exerciesAll'));
+
+    }
+
+
+
+    public function Searchcours(Request $request){
+        $request->validate([
+            'search'=>'required'
+       ]);
+        if(!session()->get('prof') && !session()->get('authProf')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('login.prof_app');
+        }
+        $user=session()->get('prof');
+        $coursAll=Cours::where('enseignant_id',$user[0]->id)
+        ->where('titre','LIKE','%'.$request->search.'%')
+        ->orWhere('created_at','LIKE','%'.$request->search.'%')
+        ->orWhere('updated_at','LIKE','%'.$request->search.'%')
+
+        ->paginate(5);
+
+        return view('Prof.cours',compact('coursAll','user'));
+    }
+
 }
