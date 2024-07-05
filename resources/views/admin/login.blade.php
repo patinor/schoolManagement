@@ -54,7 +54,7 @@
                 </div>
 
 
-                <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                <input type="submit" value="Connexion" class="btn btn-block btn-primary">
 
               </form>
             </div>

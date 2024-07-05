@@ -19,20 +19,20 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{{route('specialite.listes.admin')}}">
-              <i class="icon-file menu-icon"></i>
+            <a class="nav-link btn-btn-info" href="{{route('specialite.listes.admin')}}">
+            <i class="bi bi-sticky-fill"></i>
               <span class="menu-title">Lises des spécialité</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{route('listes.etudiants')}}">
-              <i class="icon-pie-graph menu-icon"></i>
+            <i class="bi bi-person-standing"></i>
               <span class="menu-title">Listes des étudiants</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{route('listes.professeurs')}}">
-              <i class="icon-command menu-icon"></i>
+            <i class="bi bi-person-lines-fill"></i>
               <span class="menu-title">Listes des professeurs</span>
             </a>
           </li>

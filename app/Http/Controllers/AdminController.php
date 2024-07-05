@@ -64,6 +64,21 @@ class AdminController extends Controller
         ]);
     }
 
+    public function searchSpecialite(Request $request){
+        $request->validate([
+            'search'=>'required'
+        ]);
+
+        $specialiteAll = specialite::where('id','LIKE','%'.$request->search.'%')
+        ->orWhere('specialite','LIKE','%'.$request->search.'%')
+        ->orWhere('created_at','LIKE','%'.$request->search.'%')
+        ->
+        paginate(4);
+        return view('admin.specialite',[
+            'specialiteAll'=>$specialiteAll
+        ]);
+    }
+
     public function addSpecialite(Request $request){
 
         $request->validate([
@@ -172,10 +187,44 @@ public function etudiant(){
     ]);
 }
 
+public function searEtudiant(Request $request){
+    $request->validate([
+         'search'=>'required'
+    ]);
+
+    $etudiantAll=Etudiant::where('nom','LIKE','%'.$request->search.'%')->
+    orWhere('email','LIKE','%'.$request->search.'%')->
+    orWhere('prenom','LIKE','%'.$request->search.'%')->
+    orWhere('adresse','LIKE','%'.$request->search.'%')->
+    orWhere('id','LIKE','%'.$request->search.'%')->
+    paginate(5);
+    return view('admin.etudiant',[
+        'etudiantAll'=>$etudiantAll
+    ]);
+}
+
 public function enseignant(){
 
 
     $professeurAll=Enseignant::paginate(5);
+
+    return view('admin.professeur',[
+        'professeurAll'=>$professeurAll
+    ]);
+}
+
+public function searEnseignant(Request $request){
+
+    $request->validate([
+        'search'=>'required'
+   ]);
+    $professeurAll=Enseignant::where('nom','LIKE','%'.$request->search.'%')->
+    orWhere('email','LIKE','%'.$request->search.'%')->
+    orWhere('prenom','LIKE','%'.$request->search.'%')->
+    orWhere('adresse','LIKE','%'.$request->search.'%')->
+    orWhere('tel','LIKE','%'.$request->search.'%')->
+    orWhere('id','LIKE','%'.$request->search.'%')->
+    paginate(5);
 
     return view('admin.professeur',[
         'professeurAll'=>$professeurAll

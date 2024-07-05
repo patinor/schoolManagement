@@ -106,11 +106,7 @@
                 <input type="file" class="form-control" id="tel" name="profile" >
             </div>
 
-            <div class="form-group">
-                <label for="tel"> Piece identité Ex: Passe-Port, carte-sejour ...</label>
-                <input type="file" class="form-control" id="tel" name="piece" >
-            </div>
-
+        
             <div class="form-group">
                 <label for="adresse">Adresse :</label>
                 <input type="text" class="form-control" id="adresse" value="{{$user[0]->adresse}}" name="adresse" >

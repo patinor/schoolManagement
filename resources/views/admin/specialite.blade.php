@@ -30,6 +30,11 @@
   +ajouter-une-spécialité
 </button>
                   <div class="table-responsive">
+                  <form action="{{route('searchSpecialite.admin')}}" method="POST">
+                        @csrf
+                        <input placeholder="recherche ..." type="text" name="search" required >
+                        <button>Valider</button>
+                    </form>
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -63,7 +68,7 @@
                             {{$special->created_at}}
                           </td>
                           <td>
-                            Mise à jour
+                          {{$special->updated_at}}
                           </td>
                           <td>
                            <a href="{{route('updateSpecialite.details',['id'=>$special->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
@@ -110,14 +115,7 @@
 
           </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from Bootstrapdash.com</span>
-          </div>
-        </footer>
+        
         <!-- partial -->
       </div>
       <!-- main-panel ends -->

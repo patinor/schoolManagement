@@ -92,10 +92,7 @@ class EnseignantController extends Controller
         }
 
 
-        if($etudiantRequest->hasFile('pice')){
-            $et=$etudiantRequest->file('pice')->store('prof','public');
-        }
-
+       
         $enseignant->adresse=$etudiantRequest->adresse ? :'';
         $enseignant->specialite_id=$etudiantRequest->specialite_id ;
 
@@ -391,7 +388,7 @@ class EnseignantController extends Controller
         $request->validate([
              'search'=>'required'
         ]);
-       
+
         $user=session()->get('prof');
         $exerciesAll=Exercies_cours::where('enseignant_id',$user[0]->id)
         ->where('titre','LIKE','%'.$request->search.'%')

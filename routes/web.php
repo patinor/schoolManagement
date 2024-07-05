@@ -44,6 +44,8 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::get('/dashboard-admin',[AdminController::class,'dashboard'])->name('dashboard.admin');
     Route::post('/dashboard-update_account',[AdminController::class,'update_account'])->name('update_account.admin');
     Route::post('/dashboard-update_specialite',[AdminController::class,'updateSpecialites'])->name('updateS.pecialites');
+    Route::post('/dashboard-rechercheSpecialite',[AdminController::class,'searchSpecialite'])->name('searchSpecialite.admin');
+    Route::post('/dashboard-rechercheEtudiant',[AdminController::class,'searEtudiant'])->name('searEtudiant.admin');
 
     Route::get('/ddetailsSpecialite/{id}',[AdminController::class,'updateSpecialite'])->name('updateSpecialite.details');
     Route::get('/listesDesETudiants',[AdminController::class,'etudiant'])->name('listes.etudiants');
@@ -72,6 +74,8 @@ Route::middleware(['etudiant.auth'])->group(function () {
     Route::get('/etudiant-listesExercices/{id}',[EtudiantController::class,'listesExercices'])->name('listes.Exercices.cours');
 
     Route::get('/etudiant-home_page',[EtudiantController::class,'home'])->name('home.etudiant.form');
+
+
 });
 
 
