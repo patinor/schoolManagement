@@ -54,6 +54,7 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::get('/logoutAdmin',[AdminController::class,'logoutAdmin'])->name('admin.logout');
 
 });
+Route::post('/etudiant-authentification',[EtudiantController::class,'doLogin'])->name('create.doLogin');
 
 
 // Etudiant Routes protection
@@ -63,7 +64,6 @@ Route::middleware(['etudiant.auth'])->group(function () {
     Route::get('/etudiant-cours_video_etudiant/{id}',[EtudiantController::class,'listesVideo'])->name('listes.Video');
     Route::get('/etudiant-listesDocumentSoumis',[EtudiantController::class,'listesSoumission'])->name('listes.Soumission');
 
-    Route::post('/etudiant-authentification',[EtudiantController::class,'doLogin'])->name('create.doLogin');
     Route::post('/etudiant-creation-compte',[EtudiantController::class,'create_etudiant'])->name('create.account.etudiant');
     Route::get('/etudiant-cours_exercices/{id}',[EtudiantController::class,'cours_etudiant'])->name('cours_etudiant.details');
 
