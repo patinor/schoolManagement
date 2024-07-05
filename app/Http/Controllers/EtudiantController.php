@@ -92,11 +92,7 @@ class EtudiantController extends Controller
     }
 
     public function home(){
-        if(!session()->get('etudiant') && !session()->get('auth')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
-        }
         $user=session()->get('etudiant');
         $coursAll=Cours::where('enseignant_id',$user[0]->id);
 
@@ -107,11 +103,6 @@ class EtudiantController extends Controller
 
     public function cours_etudiant($id){
 
-        if(!session()->get('etudiant') && !session()->get('auth')){
-
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
-        }
         $specialite=specialite::find($id);
         if(!$specialite){
             toastr()->warning('Veuillez vous connecter');
@@ -141,11 +132,7 @@ class EtudiantController extends Controller
 
     public function listesSoumission(){
 
-        if(!session()->get('etudiant') && !session()->get('auth')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
-        }
         $user=session()->get('etudiant');
         $cours= CorrectionEtudiant::where('etudiant_id',$user[0]->id)->paginate(5);
 
@@ -168,11 +155,7 @@ class EtudiantController extends Controller
 
     public function cours_etudiant_vue($id){
 
-        if(!session()->get('etudiant') && !session()->get('auth')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
-        }
         $specialite=specialite::find($id);
         if(!$specialite){
             toastr()->warning('Veuillez vous connecter');
@@ -196,11 +179,7 @@ class EtudiantController extends Controller
 
 
     public function listesExercices($id){
-        if(!session()->get('etudiant') && !session()->get('auth')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
-        }
         $specialite=specialite::find($id);
         if(!$specialite){
             toastr()->warning('Veuillez vous connecter');
@@ -249,11 +228,7 @@ class EtudiantController extends Controller
 
 
     public function listesVideo($id){
-        if(!session()->get('etudiant') && !session()->get('auth')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
-        }
         $specialite=specialite::find($id);
         if(!$specialite){
             toastr()->warning('Veuillez vous connecter');
@@ -277,11 +252,7 @@ class EtudiantController extends Controller
 
 
     public function searchCours(Request $request){
-        if(!session()->get('etudiant') && !session()->get('auth')){
-
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
-        }
+       
         $user=session()->get('etudiant');
         $coursAll=Cours::where('enseignant_id',$user[0]->id);
 

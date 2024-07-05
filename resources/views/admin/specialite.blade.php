@@ -25,7 +25,6 @@
                 <div class="card-body">
                   <h4 class="card-title">Listes de spcialité</h4>
                   <p class="card-description">
-                    Add class <code>.Listes de spcialité</code>
                   </p>
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   +ajouter-une-spécialité

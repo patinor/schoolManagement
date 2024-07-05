@@ -64,6 +64,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'auth.admin' => \App\Http\Middleware\UserAuthMidleware::class,
+        'etudiant.auth' => \App\Http\Middleware\EtudiantMiddelware::class,
+        'prof.auth' => \App\Http\Middleware\EnseignantMiddelware::class,
 
     ];
 }

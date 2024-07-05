@@ -49,8 +49,8 @@
                   <input type="text" class="form-control" name="email" >
                 </div>
                 <div class="form-group last mb-3">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" name="password" placeholder="Your Password" id="password">
+                  <label for="password">Mot-de-Passe</label>
+                  <input type="password" class="form-control" name="password" placeholder="Mot de Passe" id="password">
                 </div>
 
 

@@ -68,11 +68,7 @@ class EnseignantController extends Controller
 
     public function cours_enseignant(){
 
-        if(!session()->get('prof') && !session()->get('authProf')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
-        }
         $user=session()->get('prof');
         return view('Prof.cours',compact('user'));
     }
@@ -226,11 +222,7 @@ class EnseignantController extends Controller
 
     public function update_account(){
 
-        if(!session()->get('prof') && !session()->get('authProf')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
         $user=session()->get('prof');
         $specialite=specialite::all();
         return view("Prof.update",compact('user','specialite'));
@@ -244,11 +236,7 @@ class EnseignantController extends Controller
             return back();
         }
 
-        if(!session()->get('prof') && !session()->get('authProf')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
         if($request->hasFile('cours')){
             $cours->cours=$request->file('cours')->store('cours','public');
         }
@@ -304,11 +292,7 @@ class EnseignantController extends Controller
             return back();
         }
 
-        if(!session()->get('prof') && !session()->get('authProf')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
         $user=session()->get('prof');
 
         return view('Prof.details_exo',compact('user','cours'));
@@ -320,12 +304,6 @@ class EnseignantController extends Controller
         if(!$cours){
             toastr()->error('Cours inexistant dans la base');
             return back();
-        }
-
-        if(!session()->get('prof') && !session()->get('authProf')){
-
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
         }
         if($request->hasFile('cours')){
             $cours->cours=$request->file('cours_pdf')->store('cours_pdf','public');
@@ -340,12 +318,6 @@ class EnseignantController extends Controller
 
 
     public function coursListes(){
-
-        if(!session()->get('prof') && !session()->get('authProf')){
-
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
         $user=session()->get('prof');
         $coursAll=Cours::where('enseignant_id',$user[0]->id)->paginate(5);
 
@@ -354,12 +326,6 @@ class EnseignantController extends Controller
 
 
     public function listesSoumission(){
-
-        if(!session()->get('prof') && !session()->get('auth')){
-
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
         $user=session()->get('prof');
         $cours= CorrectionEtudiant::orderBy('id','DESC')->paginate(5);
 
@@ -383,11 +349,7 @@ class EnseignantController extends Controller
 
 
     public function editeSoumission($id){
-        if(!session()->get('prof') && !session()->get('auth')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
         $user=session()->get('prof');
         $cours= CorrectionEtudiant::find($id);
 
@@ -414,11 +376,7 @@ class EnseignantController extends Controller
             return back();
         }
 
-        if(!session()->get('prof') && !session()->get('authProf')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
         if($request->hasFile('correction')){
             $cours->correction=$request->file('correction')->store('correction','public');
         }
@@ -433,11 +391,7 @@ class EnseignantController extends Controller
         $request->validate([
              'search'=>'required'
         ]);
-        if(!session()->get('prof') && !session()->get('authProf')){
-
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
+       
         $user=session()->get('prof');
         $exerciesAll=Exercies_cours::where('enseignant_id',$user[0]->id)
         ->where('titre','LIKE','%'.$request->search.'%')
@@ -454,11 +408,7 @@ class EnseignantController extends Controller
         $request->validate([
             'search'=>'required'
        ]);
-        if(!session()->get('prof') && !session()->get('authProf')){
 
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
         $user=session()->get('prof');
         $coursAll=Cours::where('enseignant_id',$user[0]->id)
         ->where('titre','LIKE','%'.$request->search.'%')

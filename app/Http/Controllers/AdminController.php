@@ -37,7 +37,7 @@ class AdminController extends Controller
         ]);
 
         if(!Auth::attempt($credentials)){
-            toastr()->warning('Informations invalide');
+            toastr()->warning('Informations invalide, veuillez ressayer ');
             return back();
         }
 
