@@ -25,8 +25,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{route('logout.etudiant')}}">
-              <i class="icon-command menu-icon"></i>
+            <a class="nav-link  " href="{{route('logout.etudiant')}}">
+            <i class="bi bi-power"></i>
               <span class="menu-title">Deconnection</span>
             </a>
           </li>

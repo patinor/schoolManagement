@@ -62,6 +62,7 @@ Route::post('/enseignement-ajouter-correction-soumis',[EnseignantController::cla
 
 
 Route::post('/soumissionDevoir',[EtudiantController::class,'soumettreExerices'])->name('soumettre.Exerices');
+Route::post('/recherceheCoursEtudiant',[EtudiantController::class,'searchCours'])->name('searchCours.etudiant');
 
 Route::get('/etudiant-cours_exercices_vide/{id}',[EtudiantController::class,'cours_etudiant_vue'])->name('cours.etudiant.vue');
 Route::get('/etudiant-cours_video_etudiant/{id}',[EtudiantController::class,'listesVideo'])->name('listes.Video');

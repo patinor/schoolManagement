@@ -49,11 +49,11 @@
 @endif
                 <div class="form-group first">
                   <label for="Identifiant">Identifiant</label>
-                  <input type="text" class="form-control" name="emailOrTel" placeholder="your-email@gmail.com" id="Identifiant">
+                  <input type="text" class="form-control" name="emailOrTel" placeholder="exemple-email@gmail.com" id="Identifiant">
                 </div>
                 <div class="form-group last mb-3">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" name="password" placeholder="Your Password" id="password">
+                  <label for="password">Mot-de-Passe</label>
+                  <input type="password" class="form-control" name="password" placeholder="Votre Mot de Passe" id="password">
                 </div>
 
 

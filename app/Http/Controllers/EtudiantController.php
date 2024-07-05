@@ -273,4 +273,22 @@ class EtudiantController extends Controller
 
         return view('Etudiant.cours',compact('coursAll','user','specialite'));
     }
+
+
+
+    public function searchCours(Request $request){
+        if(!session()->get('etudiant') && !session()->get('auth')){
+
+            toastr()->warning('Veuillez vous connecter');
+            return redirect()->route('store_etudiant.etudiant.form');
+        }
+        $user=session()->get('etudiant');
+        $coursAll=Cours::where('enseignant_id',$user[0]->id);
+
+        $exercices=specialite::where('specialite','LIKE','%'.$request->search.'%')
+        ->orWhere('created_at','LIKE','%'.$request->search.'%')
+        ->
+        paginate(6);
+        return view('Etudiant.home',compact('user','exercices'));
+    }
 }

@@ -70,11 +70,11 @@
                   <input type="text" class="form-control" name="adresse"  id="username">
                 </div>
                 <div class="form-group last mb-3">
-                  <label for="password">Password</label>
+                  <label for="password">Mot-de-passe</label>
                   <input type="password" class="form-control" name="password" id="password">
                 </div>
                 <div class="form-group last mb-3">
-                  <label for="password">Password-confirmation</label>
+                  <label for="password">Mot-de-passe-de-confirmation</label>
                   <input type="password" class="form-control" name="password_confirm" >
                 </div>
 

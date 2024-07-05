@@ -29,6 +29,11 @@
                   <p class="card-description">
                   </p>
           <div class="table-responsive">
+          <form action="{{route('searchCours.etudiant')}}" method="POST">
+                        @csrf
+                        <input placeholder="recherche ..." type="text" name="search" required >
+                        <button>Valider</button>
+                    </form>
                     <table class="table table-striped">
                       <thead>
                       <tr>
