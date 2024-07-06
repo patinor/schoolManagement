@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('exercies_cours', function (Blueprint $table) {
             $table->id();
             $table->string('cours_pdf');
+            $table->string('titre')->nullable();
             $table->foreignIdFor(Enseignant::class);
             $table->timestamps();
         });

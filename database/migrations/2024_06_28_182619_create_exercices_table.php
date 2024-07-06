@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Cours::class);
             $table->string('fichier');
+            $table->string('titre')->nullable();
+
             $table->timestamps();
         });
     }
