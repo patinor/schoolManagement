@@ -37,16 +37,16 @@
               <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
               </div>
               <form action="{{route('create.doLogin')}}" method="POST">
-                @csrf
-                @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li style="color: red;">{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                  @csrf
+                  @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li style="color: red;">{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif
                 <div class="form-group first">
                   <label for="Identifiant">Identifiant</label>
                   <input type="text" class="form-control" name="emailOrTel" placeholder="exemple-email@gmail.com" id="Identifiant">

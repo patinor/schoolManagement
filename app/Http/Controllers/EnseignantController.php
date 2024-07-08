@@ -7,6 +7,7 @@ use App\Models\CorrectionEtudiant;
 use App\Models\Cours;
 use App\Models\Enseignant;
 use App\Models\Exercies_cours;
+use App\Models\Lecon;
 use App\Models\specialite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,10 +18,89 @@ class EnseignantController extends Controller
 
 
 
+    public function listesLecon(){
+        $user=session()->get('prof');
+        $coursAll=Lecon::paginate(5);
+        $coursLecon=Cours::all();
+        return view('Prof.Lecons',compact('coursAll','coursLecon','user'));
+    }
+
+
+
+    
+
+
+    public function createLecon(Request $request){
+
+        $request->validate([
+            'titre'=>'required',
+            'video'=>'required',
+            'cours_id'=>'required'
+        ],[
+            'titre.required'=>'Le titre est requis',
+            'cours_id.required'=>'Veuillez choisir un cours !',
+            'video.required'=>'La vidéo n est pas correct'
+        ]);
+
+        $lecon = new Lecon();
+        $lecon->titre=$request->titre;
+        $lecon->cours_id=$request->cours_id;        
+
+        $lecon->video=$request->video;
+        $lecon->save();
+        toastr()->success('Leçon ajouté avec succès !');
+        return back();
+
+
+    }
+
+
+    public function detailsLecon($id){
+
+        $cours=Lecon::find($id);
+        if(!$cours){
+            toastr()->warning('Veuillez renitialiser la page');
+            return back();
+        }
+
+        $user=session()->get('prof');
+        $coursLecon=Cours::all();
+        return view('Prof.details_lecon',compact('user','cours','coursLecon'));
+    }
+
+    public function updateLecon(Request $request){
+
+        $request->validate([
+            'titre'=>'required',
+            'video'=>'required',
+            'cours_id'=>'required',
+            'id'=>'required'
+        ],[
+            'titre.required'=>'Le titre est requis',
+            'cours_id.required'=>'Veuillez choisir un cours !',
+            'video.required'=>'La vidéo n est pas correct'
+        ]);
+
+        $lecon = Lecon::find($request->id);
+        if(!$lecon){
+            toastr()->warning('Veuillez renitialiser la page');
+            return back();
+        }
+        $lecon->titre=$request->titre;
+        $lecon->cours_id=$request->cours_id;        
+
+        $lecon->video=$request->video;
+        $lecon->save();
+        toastr()->success('Leçon modifé avec succès !');
+        return back();
+
+
+    }
+
     public function register(){
 
         $specialite=specialite::all();
-        return view('Prof.prof',compact('specialite'));
+        return view('teacher.register',compact('specialite'));
     }
 
 
@@ -143,7 +223,7 @@ class EnseignantController extends Controller
     public function addCoursProf(Request $request){
 
         $request->validate([
-              'cours'=>'required',
+              'image'=>'required',
               'titre'=>'required',
               'id'=>'required'
         ]);
@@ -152,10 +232,10 @@ class EnseignantController extends Controller
         $cours->enseignant_id=$request->id;
         $cours->titre=$request->titre;
         $imagePath='';
-        if($request->hasFile('cours')){
-            $imagePath=$request->file('cours')->store('cours','public');
+        if($request->hasFile('image')){
+            $imagePath=$request->file('image')->store('cours','public');
         }
-        $cours->cours=$imagePath;
+        $cours->image=$imagePath;
 
         $cours->save();
         toastr()->info('Informations validé');
@@ -178,7 +258,7 @@ class EnseignantController extends Controller
 
 
     {
-        return view('Prof.login');
+        return view('teacher.login');
     }
 
     public function detailsCours($id){
@@ -234,8 +314,8 @@ class EnseignantController extends Controller
         }
 
 
-        if($request->hasFile('cours')){
-            $cours->cours=$request->file('cours')->store('cours','public');
+        if($request->hasFile('image')){
+            $cours->image=$request->file('image')->store('cours','public');
         }
         $cours->titre=$request->titre;
         $cours->touch();

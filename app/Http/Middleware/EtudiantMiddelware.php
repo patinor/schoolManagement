@@ -18,7 +18,7 @@ class EtudiantMiddelware
 
         if(!session()->get('etudiant') && !session()->get('auth')){
             toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('store_etudiant.etudiant.form');
+            return redirect()->route('login.student');
         }
         return $next($request);
     }

@@ -29,15 +29,20 @@
                   <h4 class="card-title">Listes des cours</h4>
                   <p class="card-description">
                   </p>
+                 <p>
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  +Ajouter-un-cours
-</button>
+                    +Ajouter-un-cours
+                  </button>
+                 </p>
+
                   <div class="table-responsive">
+                 <p>
                   <form action="{{route('Search.cours.details')}}" method="POST">
-                        @csrf
-                        <input placeholder="recherche ..." type="text" name="search" required >
-                        <button>Valider</button>
-                    </form>
+                    @csrf
+                    <input placeholder="recherche ..." type="text" name="search" required >
+                    <button>Valider</button>
+                </form>
+                 </p>
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -45,7 +50,7 @@
                            Titre
                           </th>
                           <th>
-                          Voir
+                         Image
                           </th>
                           <th>
                            Date de creation
@@ -56,9 +61,7 @@
                           <th>
                             Details
                           </th>
-                          <th>
-                            Appercu
-                          </th>
+                         
                         </tr>
                       </thead>
                       <tbody>
@@ -68,7 +71,7 @@
                            {{ $cours->titre}}
                           </td>
                           <td>
-                          <a href="{{Storage::url( $cours->cours_pdf)}}">Voir</a>
+                          <img src="{{asset('storage/'.$cours->image)}}">
                           </td>
                           <td>
                             {{ $cours->created_at}}
@@ -80,9 +83,7 @@
                           <td>
                            <a href="{{route('details.cours.prof',['id'=>$cours->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
                           </td>
-                          <td>
-                            <a href="{{route('details.Cours.Appercu',['id'=>$cours->id])}}" class="btn btn-info"><i class="bi bi-camera-reels"></i>></a>
-                          </td>
+                         
 
                         </tr>
                         @endforeach
@@ -123,8 +124,8 @@
     <input type="text" class="form-control" required id="exampleInputEmail1"  name="titre">
   </div>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Exercices</label>
-    <input type="file" class="form-control"  id="exampleInputEmail1" name="cours">
+    <label for="exampleInputEmail1" class="form-label">Image</label>
+    <input type="file" class="form-control"  id="exampleInputEmail1" name="image">
   </div>
   <input type="hidden" name="id" value="{{ $user[0]->id}}">
   <button type="submit" class="btn btn-primary">Submit</button>

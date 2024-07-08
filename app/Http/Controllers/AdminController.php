@@ -16,11 +16,11 @@ class AdminController extends Controller
 
     public function login(){
 
-        /* $user=new User();
+        /*$user=new User();
         $user->name='danielLevy';
-        $user->email= 'exemple@gmail.com';
+        $user->email= 'admin@gmail.com';
         $user->password= Hash::make('daniel');
-        $user->save(); */
+        $user->save();*/
 
         return view('admin.login');
     }

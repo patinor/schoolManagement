@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,22 +26,22 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Listes des  Exercices</h4>
+                  <h4 class="card-title">Listes des leçons</h4>
                   <p class="card-description">
                   </p>
-                 <p>
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    +Ajouter-un-exercice
-                  </button></br>
-                 </p>
-                  <div class="table-responsive">
                    <p>
-                    <form action="{{route('search.Exercices.prof')}}" method="POST">
-                      @csrf
-                      <input placeholder="recherche ..." type="text" name="search" required >
-                      <button>Valider</button>
-                  </form>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        +Ajouter-une-leçon
+                      </button>
                    </p>
+                  <div class="table-responsive">
+                  <p>
+                    <form action="{{route('Search.cours.details')}}" method="POST">
+                        @csrf
+                        <input placeholder="recherche ..." type="text" name="search" required >
+                        <button>Valider</button>
+                    </form>
+                  </p>
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -46,7 +49,7 @@
                            Titre
                           </th>
                           <th>
-                          PDF
+                        Cours
                           </th>
                           <th>
                            Date de creation
@@ -57,32 +60,35 @@
                           <th>
                             Details
                           </th>
+                         
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach( $exerciesAll   as  $special)
+                        @foreach($coursAll as $cours)
                         <tr>
                           <td class="py-1">
-                           {{$special->titre}}
+                           {{ $cours->titre}}
                           </td>
                           <td>
-                          <a href="{{Storage::url($special->cours_pdf)}}">Voir</a>
+                            {{ $cours->cours->titre}}
                           </td>
                           <td>
-                            {{$special->created_at}}
+                            {{ $cours->created_at}}
                           </td>
                           <td>
-                            Mise à jour
+                          {{ $cours->updated_at}}
                           </td>
+
                           <td>
-                           <a href="{{route('edite.CoursExo',['id'=>$special->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
+                           <a href="{{route('detailsLecon.cours.prof',['id'=>$cours->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
                           </td>
+                         
 
                         </tr>
                         @endforeach
                       </tbody>
                     </table>
-                    {{$exerciesAll->links()}}
+                    {{$coursAll->links()}}
                   </div>
                 </div>
               </div>
@@ -106,27 +112,34 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter une spécialité</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter une leçon</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Fermer</button>
       </div>
       <div class="modal-body">
-      <form action="{{route('ajouter.exo.cours')}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('create.Lecon.enseignant')}}" method="POST" enctype="multipart/form-data">
         @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Titre</label>
-    <input type="text" class="form-control" required id="exampleInputEmail1" name="titre">
+    <input type="text" class="form-control" required id="exampleInputEmail1"  name="titre">
   </div>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Exercices</label>
-    <input type="file" class="form-control" id="exampleInputEmail1" name="cours_pdf">
+    <label for="exampleInputEmail1" class="form-label">Url-vidéo</label>
+    <input type="text" class="form-control"  id="exampleInputEmail1" name="video">
   </div>
-  <input type="hidden" name="id" value="{{$user[0]->id}}">
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
 
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Cours</label>
+     <select name="cours_id" id="" class="form-select">
+        @foreach($coursLecon as $cours)
+        <option value="{{$cours->id}}">{{$cours->titre}}</option>
+        @endforeach
+     </select>
+  </div>
+  <input type="hidden" name="id" value="{{ $user[0]->id}}">
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
       </div>
-      <
+
     </div>
   </div>
 </div>
@@ -135,7 +148,7 @@
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        
+       
         <!-- partial -->
       </div>
       <!-- main-panel ends -->

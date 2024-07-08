@@ -85,8 +85,8 @@
     <input type="text" class="form-control" required id="exampleInputEmail1" value="{{ $cours->titre}}" name="titre">
   </div>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Exercices</label>
-    <input type="file" class="form-control"  id="exampleInputEmail1" name="cours">
+    <label for="exampleInputEmail1" class="form-label">Images</label>
+    <input type="file" class="form-control"  id="exampleInputEmail1" name="image">
   </div>
   <input type="hidden" name="id" value="{{ $cours->id}}">
   <button type="submit" class="btn btn-primary">Submit</button>

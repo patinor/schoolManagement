@@ -8,6 +8,7 @@ use App\Models\Cours;
 use App\Models\Enseignant;
 use App\Models\Etudiant;
 use App\Models\Exercies_cours;
+use App\Models\Lecon;
 use App\Models\specialite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,16 +21,91 @@ class EtudiantController extends Controller
 
     public function etudiant(){
 
-        return view('Etudiant.etudiant');
+        return view('student.register');
     }
 
     public function store_etudiant()
 
 
     {
-        return view('Etudiant.login');
+        return view('student.login');
     }
 
+
+
+    
+    public function update_account(){
+
+        $user=session()->get('etudiant');
+         if(!$user){
+            toastr()->error('');
+            return redirect()->route('login.student');
+         }
+
+
+         return view('student.update',compact('user'));
+
+    }
+
+
+    public function listeLeconCours($id){
+
+        $cours=Cours::find($id);
+        if(!$cours){
+            toastr()->error('Veuillez actualiser la page');
+            return back();
+        }
+
+        $leconAll=Lecon::where('cours_id',$cours->id)->paginate(5);
+
+        return view('student.details_lecon_etudiant',[
+            'leconAll'=>$leconAll,
+            'cours'=>$cours
+        ]);
+    }
+
+
+    public function playVideoLecon($id){
+        $lecon=Lecon::find($id);
+        if(!$lecon){
+            toastr()->error('Veuillez rafraichir la page !');
+            return back();
+        }
+
+        
+
+        return view("student.play",[
+            'lecon'=>$lecon
+        ]);
+    }
+
+
+    public function update_etudiant(Request $etudiantRequest){
+
+        
+        $etudiant = Etudiant::find($etudiantRequest->id);
+        $etudiant->nom=$etudiantRequest->nom;
+        $etudiant->prenom=$etudiantRequest->prenom;
+
+        $etudiant->email=$etudiantRequest->email;
+        $etudiant->tel=$etudiantRequest->tel;
+
+        if($etudiantRequest->hasFile('profile')){
+            $etudiant->profile=$imagePath=$etudiantRequest->file('profile')->store('etudiant','public');
+        }
+
+        $etudiant->adresse=$etudiantRequest->adresse ? :'';
+        $etudiant->save();
+
+        session()->forget('etudiant');
+        session()->put('etudiant',[$etudiant]);
+
+        toastr()->success('Modification reussi avec succès !');
+
+        return back();
+
+
+    }
 
     public function create_etudiant(EtudiantRequest $etudiantRequest){
 
@@ -57,7 +133,7 @@ class EtudiantController extends Controller
 
         toastr()->success('Compte crée avec succèss !');
 
-        return redirect()->route('store_etudiant.etudiant.form');
+        return redirect()->route('login.student');
 
 
     }
@@ -80,7 +156,7 @@ class EtudiantController extends Controller
         }
 
         if(!Hash::check($request->password,$etudiant->password)){
-            toastr()->warning('Vos informations sont incorrect');
+            toastr()->warning('Vos informations sont incorrectes');
             return back();
         }
 
@@ -94,10 +170,11 @@ class EtudiantController extends Controller
     public function home(){
 
         $user=session()->get('etudiant');
-        $coursAll=Cours::where('enseignant_id',$user[0]->id);
+        $coursAll=Cours::paginate(5);
 
         $exercices=specialite::paginate(6);
-        return view('Etudiant.home',compact('user','exercices'));
+
+        return view('student.cours',compact('user','exercices','coursAll'));
     }
 
 

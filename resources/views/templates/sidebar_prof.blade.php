@@ -25,7 +25,12 @@
                 <span class="menu-title">Listes des cours</span>
             </a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('listes.Lecon') }}">
+            <i class="bi bi-backpack4"></i>
+                <span class="menu-title">Listes des leçons</span>
+            </a>
+        </li>
        
         <li class="nav-item">
             <a class="nav-link" href="{{ route('listes.Soumission.prof') }}">

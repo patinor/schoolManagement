@@ -14,21 +14,22 @@ use Illuminate\Support\Facades\Route;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
-|
+|lcome
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('student.home');
 });
 
 Route::get('/etudiant',[EtudiantController::class,'etudiant'])->name('etudiant.form');
-Route::get('/etudiant-login',[EtudiantController::class,'store_etudiant'])->name('store_etudiant.etudiant.form');
+Route::get('/etudiant-login',[EtudiantController::class,'store_etudiant'])->name('login.student');
 
 Route::get('/enseigant-register',[EnseignantController::class,'register'])->name('register.prof');
 Route::post('/enseignant-authentification_login',[EnseignantController::class,'doLogin'])->name('authentification.prof');
 Route::get('/login-prof-dashboard',[EnseignantController::class,'login_prof'])->name('login.prof_app');
 Route::post('/enseignant-register_enseignant',[EnseignantController::class,'create_enseignant'])->name('create.enseignant');
 
+Route::post('/etudiant-creation-compte',[EtudiantController::class,'create_etudiant'])->name('create.account.etudiant');
 
 // Partie de l administrateur
 Route::get('/authentification_admin',[AdminController::class,'login'])->name('admin.auth');
@@ -64,16 +65,21 @@ Route::middleware(['etudiant.auth'])->group(function () {
     Route::get('/etudiant-cours_video_etudiant/{id}',[EtudiantController::class,'listesVideo'])->name('listes.Video');
     Route::get('/etudiant-listesDocumentSoumis',[EtudiantController::class,'listesSoumission'])->name('listes.Soumission');
 
-    Route::post('/etudiant-creation-compte',[EtudiantController::class,'create_etudiant'])->name('create.account.etudiant');
     Route::get('/etudiant-cours_exercices/{id}',[EtudiantController::class,'cours_etudiant'])->name('cours_etudiant.details');
+    Route::get('/etudiant-cours_listes_lecon/{id}',[EtudiantController::class,'listeLeconCours'])->name('liste.LeconCours.student');
+
+    Route::get('/update_account_etudiant',[EtudiantController::class,'update_account'])->name('update.account.etudiant');
 
     Route::get('/etudiant-logout_etudiant',[EtudiantController::class,'logout'])->name('logout.etudiant');
+    Route::get('/etudiant-cours_play_LeconVideo/{id}',[EtudiantController::class,'playVideoLecon'])->name('play.Video.Lecon');
 
     Route::post('/soumissionDevoir',[EtudiantController::class,'soumettreExerices'])->name('soumettre.Exerices');
     Route::post('/recherceheCoursEtudiant',[EtudiantController::class,'searchCours'])->name('searchCours.etudiant');
     Route::get('/etudiant-listesExercices/{id}',[EtudiantController::class,'listesExercices'])->name('listes.Exercices.cours');
 
     Route::get('/etudiant-home_page',[EtudiantController::class,'home'])->name('home.etudiant.form');
+
+    Route::post('/update_validation_information',[EtudiantController::class,'update_etudiant'])->name('update_etudiant.account');
 
 
 });
@@ -91,10 +97,16 @@ Route::post('/enseignement-ajouter-cours',[EnseignantController::class,'addCours
 Route::post('/enseignement-recherche-exercices',[EnseignantController::class,'searchExercices'])->name('search.Exercices.prof');
 Route::post('/enseignement-recherche-cours',[EnseignantController::class,'Searchcours'])->name('Search.cours.details');
 
+Route::get('/enseignement-details-coursAppercu-lecon',[EnseignantController::class,'listesLecon'])->name('listes.Lecon');
 
 Route::get('/enseignement-details-coursAppercu/{id}',[EnseignantController::class,'detailsCoursAppercu'])->name('details.Cours.Appercu');
 Route::get('/listesSoumissionExoEtudiant',[EnseignantController::class,'listesSoumission'])->name('listes.Soumission.prof');
 Route::get('/enseignement-details-soumissions/{id}',[EnseignantController::class,'editeSoumission'])->name('edite.Soumission.etudiant');
+Route::post('/enseignement-ajouteLecon',[EnseignantController::class,'createLecon'])->name('create.Lecon.enseignant');
+
+
+Route::get('/enseignement-details-lecon/{id}',[EnseignantController::class,'detailsLecon'])->name('detailsLecon.cours.prof');
+Route::post('/enseignement-update-lecon',[EnseignantController::class,'updateLecon'])->name('updateLecon.enseignant');
 
 Route::get('/enseignement-details-cours/{id}',[EnseignantController::class,'detailsCours'])->name('details.cours.prof');
 Route::post('/enseignement-update-cours',[EnseignantController::class,'updateCours'])->name('updateCours.professeur');
