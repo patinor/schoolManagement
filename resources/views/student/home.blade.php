@@ -36,7 +36,7 @@
     <header class="header_section border border-black p-2 mb-2 border-opacity-75">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="/">
             <span style="color: black;">
             EDTS <i class="fa-solid fa-bolt" ></i>
             </span>
@@ -54,12 +54,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{{route('home.etudiant.form')}}"> Cours</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="mesenregistrements.html">Mes enregistrements</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="coursmisenligne.html">Cours mis en ligne</a>
-              </li>
+
             </ul>
             <div class="quote_btn-container">
               <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
@@ -87,9 +82,9 @@
         <!--augmenter la police -->
         <h1 style="color: #407BFF;font-weight: bold;">EDTS</h1>
         <p class="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, soluta perspiciatis illo quis eius error saepe tempora eligendi cum similique aspernatur sint vero distinctio velit temporibus quaerat, quod a fuga.</p>
-        </div> 
+        </div>
 
-      
+
     </div>
   </section>
   <section class="service_section layout_padding mt-5">
@@ -151,7 +146,7 @@
        </div>
 
 
-      
+
   </section>
   <!--  section a propos -->
 
@@ -231,7 +226,7 @@
   <!-- end contact section -->
 
   <div class="footer_container border border-black p-2 mt-5 border-opacity-75">
-   
+
     <!-- footer section -->
     <footer class="footer_section">
       <div class="container">
@@ -250,8 +245,8 @@
               <i class="fa fa-instagram" aria-hidden="true"></i>
             </a>
           </div>
-          &copy; <span id="displayYear"></span> edts Tous droits réservés 
-         
+          &copy; <span id="displayYear"></span> edts Tous droits réservés
+
         </div>
       </div>
     </div> <!---faire un flexbox-->

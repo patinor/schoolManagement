@@ -11,24 +11,24 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-  
+
     <title>EDTS</title>
-  
-  
+
+
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{asset('/student/css/bootstrap.css')}}" />
-  
-  
+
+
     <!-- font awesome style -->
     <link href="{{asset('/student/css/font-awesome.min.css')}}" rel="stylesheet" />
-  
+
     <!-- Custom styles for this template -->
     <link href="{{asset('/student/css/style.css')}}" rel="stylesheet" />
     <!-- responsive style -->
     <link href="{{asset('/student/css/responsive.css')}}" rel="stylesheet" />
-  
+
   </head>
-  
+
 <body>
 <div >
   <div class="hero_area">
@@ -36,7 +36,7 @@
     <header class="header_section border border-black p-2 mb-2 border-opacity-75">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="/">
             <span style="color: black;">
             EDTS <i class="fa-solid fa-bolt" ></i>
             </span>
@@ -54,12 +54,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{{route('home.etudiant.form')}}"> Cours</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="mesenregistrements.html">Mes enregistrements</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="coursmisenligne.html">Cours mis en ligne</a>
-              </li>
+
             </ul>
             <div class="quote_btn-container">
               <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
@@ -73,7 +68,7 @@
           </div>
           <!---fin parametres-->
         </nav>
-      </div> 
+      </div>
     </header>
     <!-- end header section -->
      <!--formulaire inscription-->
@@ -112,7 +107,7 @@
             <img src="./images/Sign up-cuate (1).png" class="" alt="">
         </div>
      </div>
-   
+
     <!-- footer section -->
     <footer class="footer_section border border-black p-2 mb-0 border-opacity-75 mt-5">
       <div class="container">
@@ -131,8 +126,8 @@
               <i class="fa fa-instagram" aria-hidden="true"></i>
             </a>
           </div>
-          &copy; <span id="displayYear"></span> edts Tous droits réservés 
-         
+          &copy; <span id="displayYear"></span> edts Tous droits réservés
+
         </div>
       </div>
     </footer>

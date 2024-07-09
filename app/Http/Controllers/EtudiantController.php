@@ -33,7 +33,7 @@ class EtudiantController extends Controller
 
 
 
-    
+
     public function update_account(){
 
         $user=session()->get('etudiant');
@@ -72,17 +72,18 @@ class EtudiantController extends Controller
             return back();
         }
 
-        
+        $user=session()->get('etudiant');
 
         return view("student.play",[
-            'lecon'=>$lecon
+            'lecon'=>$lecon,
+            'user'=>$user
         ]);
     }
 
 
     public function update_etudiant(Request $etudiantRequest){
 
-        
+
         $etudiant = Etudiant::find($etudiantRequest->id);
         $etudiant->nom=$etudiantRequest->nom;
         $etudiant->prenom=$etudiantRequest->prenom;
@@ -329,14 +330,26 @@ class EtudiantController extends Controller
 
 
     public function searchCours(Request $request){
-       
-        $user=session()->get('etudiant');
-        $coursAll=Cours::where('enseignant_id',$user[0]->id);
 
-        $exercices=specialite::where('specialite','LIKE','%'.$request->search.'%')
+        $user=session()->get('etudiant');
+
+        $coursAll=Cours::where('titre','LIKE','%'.$request->search.'%')
         ->orWhere('created_at','LIKE','%'.$request->search.'%')
+        ->orWhere('id','LIKE','%'.$request->search.'%')
+
         ->
         paginate(6);
-        return view('Etudiant.home',compact('user','exercices'));
+        return view('student.cours',compact('user','coursAll'));
+    }
+
+    public function searchLecon(Request $request){
+
+        $user=session()->get('etudiant');
+
+        $leconAll=Lecon::where('titre','LIKE','%'.$request->search.'%')
+        ->orWhere('id','LIKE','%'.$request->search.'%')
+        ->
+        paginate(6);
+        return view('student.cours',compact('user','coursAll'));
     }
 }

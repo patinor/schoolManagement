@@ -11,13 +11,13 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-  
+
     <title>EDTS</title>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{asset('/student/css/bootstrap.css')}}" />
-  
+
     <style>
         .carousel-item img {
             height: 500px; /* Ajustez cette valeur en fonction de la hauteur souhaitée */
@@ -30,10 +30,10 @@
             border-radius: 10px;
         }
     </style>
-  
+
     <!-- font awesome style -->
     <link href="{{asset('/student/css/font-awesome.min.css')}}" rel="stylesheet" />
-  
+
     <!-- Custom styles for this template -->
     <link href="{{asset('/student/css/style.css')}}" rel="stylesheet" />
     <!-- responsive style -->
@@ -41,7 +41,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-  
+
 <body class="sub_page">
 
   <div class="hero_area">
@@ -60,19 +60,14 @@
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item">
+            <ul class="navbar-nav  ">
+              <li class="nav-item ">
                 <a class="nav-link" href="/">Acceuil <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="{{route('home.etudiant.form')}}">Cours</a>
+                <a class="nav-link" href="{{route('home.etudiant.form')}}"> Cours</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="mesenregistrements.html">Mes enregistrements</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="coursmisenligne.html">Cours mis en ligne</a>
-              </li>
+
             </ul>
             <div class="quote_btn-container">
               <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
@@ -90,20 +85,23 @@
     </header>
     <!-- end header section -->
   </div>
-  
+
   <!--barre de recherche -->
-  <div class="input-group">
+ <form action="{{route('searchCours.etudiant')}}"  method="POST">
+    @csrf
+ <div class="input-group">
     <div class="form-outline" data-mdb-input-init>
-      <input type="search" id="form1" class="form-control" placeholder="Rechercher un cours" />
+      <input type="search" id="form1" class="form-control" name="search" placeholder="Rechercher un cours" required />
     </div>
     <button type="button" class="btn btn-primary" data-mdb-ripple-init>
       <i class="fas fa-search"></i>
     </button>
   </div>
+ </form>
   <!--fin barre de recherche-->
 
   <!-- Grille des cours -->
- 
+
   <!-- Fin de la grille des cours -->
   <table class="table">
     <thead>

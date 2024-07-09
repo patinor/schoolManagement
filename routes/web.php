@@ -81,6 +81,7 @@ Route::middleware(['etudiant.auth'])->group(function () {
 
     Route::post('/update_validation_information',[EtudiantController::class,'update_etudiant'])->name('update_etudiant.account');
 
+    Route::post('/update_rechercheLecon',[EtudiantController::class,'searchLecon'])->name('recherche.searchLecon');
 
 });
 
