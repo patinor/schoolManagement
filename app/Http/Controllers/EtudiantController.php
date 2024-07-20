@@ -8,6 +8,7 @@ use App\Models\Cours;
 use App\Models\Enseignant;
 use App\Models\Etudiant;
 use App\Models\Exercies_cours;
+use App\Models\ExoStudent;
 use App\Models\Lecon;
 use App\Models\specialite;
 use Illuminate\Http\Request;
@@ -64,7 +65,20 @@ class EtudiantController extends Controller
         ]);
     }
 
+    public function exercicesCours(){
 
+     
+
+         $leconAll=ExoStudent::paginate(10);
+         $user=session()->get('etudiant');
+        return view('student.exo',[
+            'leconAll'=>$leconAll,
+            'user'=>$user
+        ]);
+    }
+
+
+    
     public function playVideoLecon($id){
         $lecon=Lecon::find($id);
         if(!$lecon){
@@ -76,6 +90,22 @@ class EtudiantController extends Controller
 
         return view("student.play",[
             'lecon'=>$lecon,
+            'user'=>$user
+        ]);
+    }
+
+
+    public function detailsExercices($id){
+        $cours=ExoStudent::find($id);
+        if(!$cours){
+            toastr()->error('Veuillez rafraichir la page !');
+            return back();
+        }
+
+        $user=session()->get('etudiant');
+
+        return view("student.details_exo",[
+            'cours'=> $cours,
             'user'=>$user
         ]);
     }
@@ -203,7 +233,7 @@ class EtudiantController extends Controller
         session()->forget('etudiant');
         session()->forget('auth');
 
-        return redirect()->route('store_etudiant.etudiant.form');
+        return redirect()->route('home.page');
 
 
     }

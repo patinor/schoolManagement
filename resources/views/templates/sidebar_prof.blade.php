@@ -27,17 +27,19 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('listes.Lecon') }}">
+                <i class="bi bi-check2-all"></i>               
+                 <span class="menu-title">Listes des leçons</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('listes.Exercices') }}">
             <i class="bi bi-backpack4"></i>
-                <span class="menu-title">Listes des leçons</span>
+                <span class="menu-title">Listes des exercices</span>
             </a>
         </li>
        
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('listes.Soumission.prof') }}">
-            <i class="bi bi-send"></i>
-                <span class="menu-title">Soumission des exos</span>
-            </a>
-        </li>
+      
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('Prof.home.deconnection') }}">

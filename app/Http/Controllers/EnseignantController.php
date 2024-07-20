@@ -7,6 +7,7 @@ use App\Models\CorrectionEtudiant;
 use App\Models\Cours;
 use App\Models\Enseignant;
 use App\Models\Exercies_cours;
+use App\Models\ExoStudent;
 use App\Models\Lecon;
 use App\Models\specialite;
 use Illuminate\Http\Request;
@@ -24,6 +25,28 @@ class EnseignantController extends Controller
         $coursLecon=Cours::all();
         return view('Prof.Lecons',compact('coursAll','coursLecon','user'));
     }
+
+
+    public function listesExercices(){
+        $user=session()->get('prof');
+        $coursAll=ExoStudent::paginate(5);
+        $coursLecon=Cours::all();
+        return view('Prof.exercices',compact('coursAll','coursLecon','user'));
+    }
+
+
+    public function detailsExercices($id){
+        $cours=ExoStudent::find($id);
+        if(!$cours){
+            toastr()->error('Veuillez rafraichir la page !');
+            return back();
+        }
+        
+        $user=session()->get('prof');
+        $coursLecon=Cours::all();
+        return view('Prof.details_exo',compact('cours','coursLecon','user'));
+    }
+
 
 
 
@@ -244,11 +267,7 @@ class EnseignantController extends Controller
 
     }
     public function home(){
-        if(!session()->get('prof') && !session()->get('authProf')){
-
-            toastr()->warning('Veuillez vous connecter');
-            return redirect()->route('login.prof_app');
-        }
+       
         $user=session()->get('prof');
         $exerciesAll=Exercies_cours::where('enseignant_id',$user[0]->id)->paginate(5);
         return view('Prof.home',compact('user','exerciesAll'));
@@ -340,27 +359,62 @@ class EnseignantController extends Controller
 
     public function addExercice(Request $request){
         $request->validate([
-             'cours_pdf'=>'required|mimes:pdf',
+             'fichier'=>'required|mimes:pdf',
              'titre'=>'required',
-             'id'=>'required'
+             'cours_id'=>'required'
         ],[
-            'cours_pdf.mimes'=>'Le fichier doit etre de format PDF',
-            'id.required'=>'L opération ne peut etre effectué',
-            'cours_pdf.required'=>'Le fichier est requis dans la base de données',
+            'fichier.mimes'=>'Le fichier doit etre de format PDF',
+            'cours_id.required'=>'L opération ne peut etre effectué',
+            'fichier.required'=>'Le fichier est requis dans la base de données',
         ]);
 
-        $exercice= new Exercies_cours();
+        $exercice= new ExoStudent();
 
 
         $exercice->titre=$request->titre;
-            $exercice->cours_pdf=$request->file('cours_pdf')->store('exo','public');
-            $exercice->enseignant_id=$request->id;
+            $exercice->fichier=$request->file('fichier')->store('exo','public');
+            $exercice->cours_id=$request->cours_id;
             $exercice->save();
             toastr()->info('Exercice ajouté avec succèss!');
             return back();
 
     }
 
+
+    
+    public function updateExercice(Request $request){
+
+        //dd($request);
+        $request->validate([
+             'fichier'=>'nullable|mimes:pdf',
+             'titre'=>'required',
+             'cours_id'=>'required',
+             'id'=>'required'
+
+        ],[
+            'fichier.mimes'=>'Le fichier doit etre de format PDF',
+            'cours_id.required'=>'L opération ne peut etre effectué',
+        ]);
+
+        $exercice=ExoStudent::find($request->id);
+
+        if(!$exercice){
+            toastr()->error('Cours inexistant dans la base');
+            return back();
+        }
+
+        
+             $exercice->titre=$request->titre;
+             if($request->hasFile('fichier')){
+
+                 $exercice->fichier=$request->file('fichier')->store('exo','public');
+             }
+            $exercice->cours_id=$request->cours_id;
+            $exercice->save();
+            toastr()->info('Exercice modifié avec success !!');
+            return back();
+
+    }
 
     public function editeCoursExo($id){
         $cours=Exercies_cours::find($id);

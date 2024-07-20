@@ -29,6 +29,15 @@
             padding: 20px;
             border-radius: 10px;
         }
+
+        .search-bar {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .course-table {
+            margin-top: 20px;
+        }
     </style>
 
     <!-- font awesome style -->
@@ -48,7 +57,7 @@
         <!-- header section starts -->
         <header class="header_section">
             <div class="container-fluid">
-                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <nav class="navbar navbar-expand-lg custom_nav-container">
                     <a class="navbar-brand" href="/">
                         <span>EDTS</span>
                     </a>
@@ -65,16 +74,27 @@
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ route('home.etudiant.form') }}">Cours</a>
                             </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{route('listes.exercices.etudiant')}}">Exercice</a>
+                            </li>
                         </ul>
-                        <div class="quote_btn-container">
-                            <a href="{{ route('login.student') }}" class="quote_btn" style="font-weight: bold;">
-                                Connexion
-                            </a>
-                        </div>
+                        @if($user)
+                        <div class="quote_btn-container me-3">
+                         <a href="{{route('logout.etudiant')}}" class="quote_btn" style="font-weight: bold;">
+                           Deconnection
+                         </a>
+                       </div>
+                       @else 
+                       <div class="quote_btn-container me-3">
+                         <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
+                           Connexion
+                         </a>
+                       </div>
+                       @endif
                     </div>
                     <div>
                         <!---parametres-->
-                        <a href="{{ route('update.account.etudiant') }}"><img src="{{ asset('/student/images/settings.png') }}" alt=""></a>
+                        <a href="{{ route('update.account.etudiant') }}"><img src="{{ asset('/student/images/settings.png') }}" alt="Settings"></a>
                     </div>
                     <!---fin parametres-->
                 </nav>
@@ -84,35 +104,44 @@
     </div>
 
     <!--barre de recherche -->
-    <form action="{{ route('searchCours.etudiant') }}" method="POST">
-        @csrf
-        <div class="input-group">
-            <div class="form-outline" data-mdb-input-init>
-                <input type="text" id="form1" class="form-control" name="search" placeholder="Rechercher un cours" required />
-            </div>
-            <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
-                <i class="fas fa-search"></i>
+    <div class="container search-bar">
+        <form action="{{ route('searchCours.etudiant') }}" method="POST" class="d-flex">
+            @csrf
+           
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label"></label>
+                </div>
+                <div class="col-auto">
+                  <input type="password" name="search" placeholder="Recherche cours" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                </div>
+               
+              </div>
+              <button type="submit" class="btn btn-primary ms-2">
+                <i class="bi bi-search"></i>
             </button>
-        </div>
-    </form>
+        </form>
+    </div>
     <!--fin barre de recherche-->
 
     <!-- Grille des cours -->
-    <div class="container my-5">
+    <div class="container course-table">
         <div class="card mb-3">
             <div class="card-header bg-primary text-white">
                 Cours : {{$cours->titre}}
             </div>
-            <ul class="list-group list-group-flush">
-                @foreach($leconAll as $lecon)
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{$lecon->titre}}
-                    <a href="{{ route('play.Video.Lecon', ['id' => $lecon->id]) }}" class="btn btn-info btn-sm">
-                        <i class="bi bi-play-fill"></i>
-                    </a>
-                </li>
-                @endforeach
-            </ul>
+            <p>
+                <ul class="list-group list-group-flush">
+                    @foreach($leconAll as $lecon)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{$lecon->titre}}
+                        <a href="{{ route('play.Video.Lecon', ['id' => $lecon->id]) }}" class="btn btn-info btn-sm">
+                            <i class="bi bi-play-fill"></i>
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </p>
         </div>
         {{$leconAll->links()}}
     </div>

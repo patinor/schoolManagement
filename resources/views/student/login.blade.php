@@ -65,8 +65,7 @@
           </div>
           <div>
             <!---parametres-->
-            <a href="{{route('update.account.etudiant')}}"><img src="{{asset('/student/images/settings.png')}}" alt=""></a>
-          </div>
+            </div>
           <!---fin parametres-->
         </nav>
       </div>
@@ -92,7 +91,9 @@
                 <input type="password" class="form-control" name="password" id="motdepasse" > <br>
                 <button type="submit" class="p-1 mb-1 bg-primary text-white" style="font-weight: bold;">Se connecter</button>
                 <br></br>
-                <a href="{{route('etudiant.form')}}">Pas de compte? Inscrivez vous</a>
+                <a href="{{route('etudiant.form')}}" >Pas de compte? Inscrivez vous</a>
+                <a href="{{route('login.prof_app')}}">Enseignant ?</a>
+
             </form>
         </div>
         <div class="col-md-6">

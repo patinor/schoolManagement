@@ -23,18 +23,22 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Listes de spcialité</h4>
+                  <h4 class="card-title">Liste des Spécialités</h4>
                   <p class="card-description">
                   </p>
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  +ajouter-une-spécialité
-</button>
+                   <p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                      +Ajouter-une-spécialité
+                    </button>
+                   </p>
                   <div class="table-responsive">
+                 <p>
                   <form action="{{route('searchSpecialite.admin')}}" method="POST">
-                        @csrf
-                        <input placeholder="recherche ..." type="text" name="search" required >
-                        <button>Valider</button>
-                    </form>
+                    @csrf
+                    <input placeholder="recherche ..." type="text" name="search" required >
+                    <button>Valider</button>
+                </form>
+                 </p>
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -42,16 +46,16 @@
                             Numéro
                           </th>
                           <th>
-                            Nom-spécialite
+                            Nom-spécialité
                           </th>
                           <th>
-                           Date de creation
+                           Date de création
                           </th>
                           <th>
                            Date de mise à jour
                           </th>
                           <th>
-                            Details
+                            Détails
                           </th>
                         </tr>
                       </thead>

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('student.home');
-});
+})->name('home.page');
 
 Route::get('/etudiant',[EtudiantController::class,'etudiant'])->name('etudiant.form');
 Route::get('/etudiant-login',[EtudiantController::class,'store_etudiant'])->name('login.student');
@@ -65,6 +65,12 @@ Route::middleware(['etudiant.auth'])->group(function () {
     Route::get('/etudiant-cours_video_etudiant/{id}',[EtudiantController::class,'listesVideo'])->name('listes.Video');
     Route::get('/etudiant-listesDocumentSoumis',[EtudiantController::class,'listesSoumission'])->name('listes.Soumission');
 
+
+    Route::get('/etudiant-listesExercices',[EtudiantController::class,'exercicesCours'])->name('listes.exercices.etudiant');
+    Route::get('/etudiant-details-exercices/{id}',[EtudiantController::class,'detailsExercices'])->name('listes.details.Exercices');
+
+        Route::get('/etudiant-cours_exercices/{id}',[EtudiantController::class,'cours_etudiant'])->name('cours_etudiant.details');
+
     Route::get('/etudiant-cours_exercices/{id}',[EtudiantController::class,'cours_etudiant'])->name('cours_etudiant.details');
     Route::get('/etudiant-cours_listes_lecon/{id}',[EtudiantController::class,'listeLeconCours'])->name('liste.LeconCours.student');
 
@@ -99,6 +105,8 @@ Route::post('/enseignement-recherche-exercices',[EnseignantController::class,'se
 Route::post('/enseignement-recherche-cours',[EnseignantController::class,'Searchcours'])->name('Search.cours.details');
 
 Route::get('/enseignement-details-coursAppercu-lecon',[EnseignantController::class,'listesLecon'])->name('listes.Lecon');
+Route::get('/enseignement-details-exercices',[EnseignantController::class,'listesExercices'])->name('listes.Exercices');
+Route::post('/enseignement-create-exercices',[EnseignantController::class,'addExercice'])->name('add.Exercice.prof');
 
 Route::get('/enseignement-details-coursAppercu/{id}',[EnseignantController::class,'detailsCoursAppercu'])->name('details.Cours.Appercu');
 Route::get('/listesSoumissionExoEtudiant',[EnseignantController::class,'listesSoumission'])->name('listes.Soumission.prof');
@@ -112,7 +120,6 @@ Route::post('/enseignement-update-lecon',[EnseignantController::class,'updateLec
 Route::get('/enseignement-details-cours/{id}',[EnseignantController::class,'detailsCours'])->name('details.cours.prof');
 Route::post('/enseignement-update-cours',[EnseignantController::class,'updateCours'])->name('updateCours.professeur');
 Route::get('/enseignement-delete-cours/{id}',[EnseignantController::class,'deleteCours'])->name('delete.cours.prof');
-Route::get('/enseignement-update-exercices/{id}',[EnseignantController::class,'editeCoursExo'])->name('edite.CoursExo');
 Route::post('/enseignement-cours-exercices',[EnseignantController::class,'updateCoursExercices'])->name('exercices_pdf.update');
 Route::get('/enseignant-home',[EnseignantController::class,'home'])->name('Prof.home');
 Route::get('/enseignant-deconnection',[EnseignantController::class,'deconnection'])->name('Prof.home.deconnection');
@@ -120,6 +127,10 @@ Route::get('/enseignant-update_account',[EnseignantController::class,'update_acc
 Route::post('/enseignant-register_enseignant_update',[EnseignantController::class,'enseignant_update'])->name('update.account.enseignant');
 Route::get('/enseignant-listes_cours',[EnseignantController::class,'coursListes'])->name('cours.Listes');
 
+Route::get('/enseignement-update-exercices/{id}',[EnseignantController::class,'detailsExercices'])->name('edite.CoursExo');
+
 Route::post('/enseignement-ajouter-correction-soumis',[EnseignantController::class,'updateCourSoumission'])->name('update.Cour.Soumission');
+
+Route::post('/enseignement-update-exercices',[EnseignantController::class,'updateExercice'])->name('update.Exercice.prof');
 
 });

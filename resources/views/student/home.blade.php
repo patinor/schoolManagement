@@ -55,16 +55,27 @@
                 <a class="nav-link" href="{{route('home.etudiant.form')}}"> Cours</a>
               </li>
 
+              <li class="nav-item active">
+                <a class="nav-link" href="{{route('listes.exercices.etudiant')}}">Exercice</a>
+              </li>
+
             </ul>
-            <div class="quote_btn-container">
-              <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
-                Connexion
-              </a>
-            </div>
+            @if(session()->get('etudiant'))
+            <div class="quote_btn-container me-3">
+             <a href="{{route('logout.etudiant')}}" class="quote_btn" style="font-weight: bold;">
+               Deconnection
+             </a>
+           </div>
+           @else 
+           <div class="quote_btn-container me-3">
+             <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
+               Connexion
+             </a>
+           </div>
+           @endif
           </div>
           <div>
             <!---parametres-->
-            <a href="{{route('update.account.etudiant')}}"><img src="{{asset('/student/images/settings.png')}}" alt=""></a>
           </div>
           <!---fin parametres-->
         </nav>
@@ -80,9 +91,23 @@
       </div>
       <div class="col  text-end mt-5 ">
         <!--augmenter la police -->
-        <h1 style="color: #407BFF;font-weight: bold;">EDTS</h1>
-        <p class="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, soluta perspiciatis illo quis eius error saepe tempora eligendi cum similique aspernatur sint vero distinctio velit temporibus quaerat, quod a fuga.</p>
-        </div>
+        <h1 style="
+        font-weight: bold;
+        background: linear-gradient(to right, #407BFF, #00C9FF);
+        background-clip: text;
+        color: transparent;
+    ">
+        EDTS
+    </h1>
+    <p style="
+        color: black;
+        text-align: justify;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+    ">
+        EDTS est une plateforme d'apprentissage dédiée à offrir des cours en ligne de haute qualité centrée autour du programme scolaire sénégalais dans divers domaines. Notre objectif est de rendre l'apprentissage accessible à tous, partout et à tout moment.
+    </p>
 
 
     </div>
@@ -91,27 +116,39 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Comment ca marche..
+          Comment ça marche..?
         </h2>
       </div>
      <div>
       <!--section professeur -->
-    <div class="container border border-black pt-3 ">
+      <div class="container border border-black pt-3 ">
         <div class="row align-items-center ">
             <div class="col-md-6 ">
                 <ol>
-                    <h5>Vous êtes professeur?</h5>
-                    <p>et Vous souhaitez mettre des cours sur la plateforme EDTS? Suivez les étapes suivantes:</p>
-                    <li>Inscrivez-vous en remplissant le formulaire d'inscription en cliquant sur le lien en dessous en remplissant les différentes informations.</li>
-                    <li>Après inscription, connectez-vous. Ensuite, un onglet "cours mis en ligne" sera mis à votre disposition et vous pourrez mettre vos différents cours à travers le formulaire d'ajout.</li>
+                    <div class="mb-4">
+                      <h5 class="font-weight-bold">Vous êtes professeur?</h5>
+                      <p>Vous souhaitez mettre des cours sur la plateforme EDTS? Suivez les étapes suivantes:</p>
+                      <ul class="list-unstyled">
+                          <li class="mb-2">
+                              <strong>1. Cliquez sur le bouton s'inscrire :</strong> La vidéo sera mise en ligne et visualisée par les élèves.
+                          </li>
+                          <li class="mb-2">
+                              <strong>2. Une fois le formulaire rempli, connectez-vous :</strong> Accédez à votre compte.
+                          </li>
+                          <li class="mb-2">
+                              <strong>3. Dans la page "cours mis en ligne" :</strong> Un formulaire d'ajout vous sera soumis. Une fois le formulaire rempli, vos cours seront disponibles en ligne.
+                          </li>
+                      </ul>
+                  </div>
                     <div class="button mt-2">
                         <a class="btn btn-primary" href="{{route('register.prof')}}" role="button" >S'inscrire</a>
                     </div>
                 </ol>
+              </div>
             </div>
-            <div class="col-md-6 text-center">
-                <img src="{{asset('/student/images/Teacher student-rafiki (3).png')}}" alt="photo professeur" class="img-fluid">
-            </div>
+              <div class="col-md-6 text-center">
+                  <img src="{{asset('/student/images/Teacher student-rafiki (3).png')}}" alt="photo professeur" class="img-fluid">
+              </div>
           </div>
                  <!--</div>
                     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -124,7 +161,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <ol>
-                    <h5>Vous êtes élève?
+                    <h5 style="font-weight: bold;">Vous êtes élève?
                     </h5>
                     <p>et Vous souhaitez mettre des cours sur la plateforme EDTS? Suivez les étapes suivantes:</p>
                     <li>Inscrivez-vous en remplissant le formulaire d'inscription en cliquant sur le lien en dessous en remplissant les différentes informations.</li>
@@ -156,15 +193,13 @@
         <div class="col-md-6">
           <div class="detail-box">
             <div class="heading_container">
-              <h2>
+              <h2 style="font-weight: bold;">
                 A propos de nous
               </h2>
             </div>
             <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-              are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-              the middle of text. All
+              Chez EDTS, nous ne nous contentons pas de transmettre des connaissances. Nous cultivons des environnements d'apprentissage enrichissants où la curiosité est encouragée, et où chaque étudiant peut atteindre son plein potentiel. Nous sommes fiers de notre approche innovante et de notre engagement envers l'excellence académique.
+
             </p>
           </div>
         </div>

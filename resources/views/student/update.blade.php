@@ -54,13 +54,23 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{{route('home.etudiant.form')}}"> Cours</a>
               </li>
-             
+              <li class="nav-item active">
+                <a class="nav-link" href="{{route('listes.exercices.etudiant')}}">Exercice</a>
+              </li>
             </ul>
-            <div class="quote_btn-container">
-              <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
-                Connexion
-              </a>
-            </div>
+            @if(session()->get('etudiant'))
+            <div class="quote_btn-container me-3">
+             <a href="{{route('logout.etudiant')}}" class="quote_btn" style="font-weight: bold;">
+               Deconnection
+             </a>
+           </div>
+           @else 
+           <div class="quote_btn-container me-3">
+             <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
+               Connexion
+             </a>
+           </div>
+           @endif
           </div>
           <div>
             <!---parametres-->

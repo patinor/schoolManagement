@@ -29,6 +29,38 @@
             padding: 20px;
             border-radius: 10px;
         }
+
+        .course-table {
+            margin-top: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        .user-info img {
+            border-radius: 50%;
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .user-info .user-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
     </style>
 
     <!-- font awesome style -->
@@ -50,9 +82,7 @@
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="/">
-            <span>
-              EDTS
-            </span>
+            <span>EDTS</span>
           </a>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,19 +97,35 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{{route('home.etudiant.form')}}"> Cours</a>
               </li>
-
+              <li class="nav-item active">
+                <a class="nav-link" href="{{route('listes.exercices.etudiant')}}">Exercice</a>
+              </li>
             </ul>
-            <div class="quote_btn-container">
-              <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
-                Connexion
-              </a>
+            <div class="user-info">
+              <img src="https://via.placeholder.com/40" alt="User Avatar">
+              <span class="user-name">Connecté : {{ $user[0]->nom }}</span>
             </div>
+            
+
+               @if($user)
+               <div class="quote_btn-container me-3">
+                <a href="{{route('logout.etudiant')}}" class="quote_btn" style="font-weight: bold;">
+                  Deconnection
+                </a>
+              </div>
+              @else 
+              <div class="quote_btn-container me-3">
+                <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
+                  Connexion
+                </a>
+              </div>
+              @endif
+            <div>
+              <!---parametres-->
+              <a href="{{route('update.account.etudiant')}}"><img src="{{asset('/student/images/settings.png')}}" alt=""></a>
+            </div>
+            <!---fin parametres-->
           </div>
-          <div>
-            <!---parametres-->
-            <a href="{{route('update.account.etudiant')}}"><img src="{{asset('/student/images/settings.png')}}" alt=""></a>
-          </div>
-          <!---fin parametres-->
         </nav>
       </div>
     </header>
@@ -87,42 +133,42 @@
   </div>
 
   <!--barre de recherche -->
- <form action="{{route('searchCours.etudiant')}}"  method="POST">
-    @csrf
- <div class="input-group">
-    <div class="form-outline" data-mdb-input-init>
+  <div class="container search-bar">
+    <form action="{{route('searchCours.etudiant')}}" method="POST" class="d-flex">
+      @csrf
       <input type="search" id="form1" class="form-control" name="search" placeholder="Rechercher un cours" required />
-    </div>
-    <button type="button" class="btn btn-primary" data-mdb-ripple-init>
-      <i class="fas fa-search"></i>
-    </button>
+      <button type="submit" class="btn btn-primary ms-2">
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
   </div>
- </form>
   <!--fin barre de recherche-->
 
   <!-- Grille des cours -->
-
-  <!-- Fin de la grille des cours -->
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Titre</th>
-        <th scope="col">Cours</th>
-        <th scope="col">Details</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="container course-table">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titre</th>
+          <th scope="col">Cours</th>
+          <th scope="col">Détails</th>
+        </tr>
+      </thead>
+      <tbody>
         @foreach($coursAll as $cours)
-      <tr>
-        <th scope="row">{{$cours->id}}</th>
-        <td>{{$cours->titre}}</td>
-        <td><img src="{{asset('storage/'.$cours->image)}}" alt="" width="100px"></td>
-        <td><a href="{{route('liste.LeconCours.student',['id'=>$cours->id])}}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
+        <tr>
+          <th scope="row">{{ $cours->id }}</th>
+          <td>{{ $cours->titre }}</td>
+          <td><img src="{{ asset('storage/' . $cours->image) }}" alt="" width="100px"></td>
+          <td><a href="{{ route('liste.LeconCours.student', ['id' => $cours->id]) }}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+  <!-- Fin de la grille des cours -->
+
   <div class="footer_container">
     <!-- footer section -->
     <footer class="footer_section">
@@ -143,7 +189,7 @@
         </div>
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a>
+          <a href="#">Free Html Templates</a>
         </p>
       </div>
     </footer>

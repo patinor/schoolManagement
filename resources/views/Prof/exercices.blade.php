@@ -31,12 +31,16 @@
                   </p>
                    <p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        +Modifier-un-exercices
+                        +Ajouter-un-exercices
                       </button>
                    </p>
                   <div class="table-responsive">
                   <p>
-                    
+                    <form action="{{route('Search.cours.details')}}" method="POST">
+                        @csrf
+                        <input placeholder="recherche ..." type="text" name="search" required >
+                        <button>Valider</button>
+                    </form>
                   </p>
                     <table class="table table-striped">
                       <thead>
@@ -51,14 +55,17 @@
                            Date de creation
                           </th>
                           <th>
-                           Date de mise à jour
+                           Aperçu
                           </th>
-
+                          <th>
+                            Details
+                          </th>
                          
                         </tr>
                       </thead>
                       <tbody>
-                       <tr>
+                        @foreach($coursAll as $cours)
+                        <tr>
                           <td class="py-1">
                            {{ $cours->titre}}
                           </td>
@@ -69,14 +76,19 @@
                             {{ $cours->created_at}}
                           </td>
                           <td>
-                            <a href="{{ Storage::url($cours->fichier)}}"_blank target="">Voir</a>
+                            <a href="{{ Storage::url($cours->fichier)}}"target="_blank" class="btn btn-info"><i class="bi bi-file-earmark-pdf-fill"></i></a>
                           </td>
 
-                        
+                          <td>
+                           <a href="{{route('edite.CoursExo',['id'=>$cours->id])}}" class="btn btn-success"><i class="bi bi-eye"></i></a>
+                          </td>
+                         
 
                         </tr>
+                        @endforeach
                       </tbody>
                     </table>
+                    {{$coursAll->links()}}
                   </div>
                 </div>
               </div>
@@ -100,15 +112,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifier un exercices</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter un exercices</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Fermer</button>
       </div>
       <div class="modal-body">
-      <form action="{{route('update.Exercice.prof')}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('add.Exercice.prof')}}" method="POST" enctype="multipart/form-data">
         @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Titre</label>
-    <input type="text" class="form-control" required id="exampleInputEmail1" value="{{$cours->titre}}"  name="titre">
+    <input type="text" class="form-control" required id="exampleInputEmail1"  name="titre">
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Fichier</label>
@@ -118,12 +130,12 @@
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Cours</label>
      <select name="cours_id" id="" class="form-select">
-        @foreach($coursLecon as $cour)
-        <option value="{{$cour->id}}">{{$cour->titre}}</option>
+        @foreach($coursLecon as $cours)
+        <option value="{{$cours->id}}">{{$cours->titre}}</option>
         @endforeach
      </select>
   </div>
-  <input type="hidden" name="id" value="{{ $cours->id}}">
+  <input type="hidden" name="id" value="{{ $user[0]->id}}">
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
       </div>

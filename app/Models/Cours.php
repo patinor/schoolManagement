@@ -12,6 +12,9 @@ class Cours extends Model
     use HasFactory;
 
 
+    public function exoStudent():HasMany {
+        return $this->hasMany(ExoStudent::class);
+    }
     public function enseignant():BelongsTo {
         return $this->belongsTo(Enseignant::class);
     }
