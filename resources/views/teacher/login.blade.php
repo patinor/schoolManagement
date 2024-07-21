@@ -11,24 +11,24 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-  
+
     <title>EDTS</title>
-  
-  
+
+
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{asset('/student/css/bootstrap.css')}}" />
-  
-  
+
+
     <!-- font awesome style -->
     <link href="{{asset('/student/css/font-awesome.min.css')}}" rel="stylesheet" />
-  
+
     <!-- Custom styles for this template -->
     <link href="{{asset('/student/css/style.css')}}" rel="stylesheet" />
     <!-- responsive style -->
     <link href="{{asset('/student/css/responsive.css')}}" rel="stylesheet" />
-  
+
   </head>
-  
+
 
 <body>
 <div >
@@ -49,24 +49,31 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  ">
-              <li class="nav-item active">
+              <li class="nav-item ">
                 <a class="nav-link" href="/">Acceuil <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="cours.html"> Cours</a>
+              <li class="nav-item active">
+                <a class="nav-link" href="{{route('home.etudiant.form')}}"> Cours</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="mesenregistrements.html">Mes enregistrements</a>
+
+              <li class="nav-item active">
+                <a class="nav-link" href="{{route('listes.exercices.etudiant')}}">Exercice</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="coursmisenligne.html">Cours mis en ligne</a>
-              </li>
+
             </ul>
-            <div class="quote_btn-container ">
-              <a href="connexion.html" class="quote_btn border-black mb-2 p-2" style="font-weight: bold;">
-                Connexion
-              </a>
-            </div>
+            @if(session()->get('etudiant'))
+            <div class="quote_btn-container me-3">
+             <a href="{{route('logout.etudiant')}}" class="quote_btn" style="font-weight: bold;">
+               Deconnection
+             </a>
+           </div>
+           @else
+           <div class="quote_btn-container me-3">
+             <a href="{{route('login.student')}}" class="quote_btn" style="font-weight: bold;">
+               Connexion
+             </a>
+           </div>
+           @endif
           </div>
           <div>
             <!---parametres-->
@@ -74,7 +81,7 @@
           </div>
           <!---fin parametres-->
         </nav>
-      </div> 
+      </div>
     </header>
     <!-- end header section -->
      <!--formulaire inscription-->
@@ -104,10 +111,10 @@
             <img src="{{asset('/student/images/Sign in-rafiki (1).png')}}" alt="photoconnexion">
         </div>
      </div>
-   
+
 
   <div class="footer_container">
-   
+
     <!-- footer section -->
     <footer class="footer_section border border-black p-2 mb-0 border-opacity-75 mt-5">
       <div class="container">
@@ -126,8 +133,8 @@
               <i class="fa fa-instagram" aria-hidden="true"></i>
             </a>
           </div>
-          &copy; <span id="displayYear"></span> edts Tous droits réservés 
-         
+          &copy; <span id="displayYear"></span> edts Tous droits réservés
+
         </div>
       </div>
     </footer>

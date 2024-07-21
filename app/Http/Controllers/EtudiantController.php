@@ -37,11 +37,7 @@ class EtudiantController extends Controller
 
     public function update_account(){
 
-        $user=session()->get('etudiant');
-         if(!$user){
-            toastr()->error('');
-            return redirect()->route('login.student');
-         }
+
 
 
          return view('student.update',compact('user'));
@@ -57,17 +53,24 @@ class EtudiantController extends Controller
             return back();
         }
 
+        $user=session()->get('etudiant');
+         if(!$user){
+            toastr()->error('');
+            return redirect()->route('login.student');
+         }
+
         $leconAll=Lecon::where('cours_id',$cours->id)->paginate(5);
 
         return view('student.details_lecon_etudiant',[
             'leconAll'=>$leconAll,
-            'cours'=>$cours
+            'cours'=>$cours,
+            'user'=>$user
         ]);
     }
 
     public function exercicesCours(){
 
-     
+
 
          $leconAll=ExoStudent::paginate(10);
          $user=session()->get('etudiant');
@@ -78,7 +81,7 @@ class EtudiantController extends Controller
     }
 
 
-    
+
     public function playVideoLecon($id){
         $lecon=Lecon::find($id);
         if(!$lecon){

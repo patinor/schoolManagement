@@ -74,8 +74,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter un cours</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifier un cours</h1>
       </div>
       <div class="modal-body">
       <form action="{{route('updateCours.professeur')}}" method="POST" enctype="multipart/form-data">
@@ -92,7 +91,9 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
       </div>
-
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+      </div>
     </div>
   </div>
 </div>
@@ -101,7 +102,7 @@
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-       
+
         <!-- partial -->
       </div>
       <!-- main-panel ends -->

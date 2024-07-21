@@ -92,7 +92,10 @@
                 <button type="submit" class="p-1 mb-1 bg-primary text-white" style="font-weight: bold;">Se connecter</button>
                 <br></br>
                 <a href="{{route('etudiant.form')}}" >Pas de compte? Inscrivez vous</a>
-                <a href="{{route('login.prof_app')}}">Enseignant ?</a>
+                <p>
+                    <a href="{{route('login.prof_app')}}">Enseignant ?</a>
+
+                </p>
 
             </form>
         </div>

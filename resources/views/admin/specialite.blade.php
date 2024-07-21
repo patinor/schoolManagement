@@ -97,7 +97,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Ajouter une spécialité</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
       <form action="{{route('addSpecialite.prof')}}" method="POST">
@@ -106,12 +105,11 @@
     <label for="exampleInputEmail1" class="form-label">Spécialité</label>
     <input type="text" class="form-control" required id="exampleInputEmail1" name="specialite">
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Envoyer</button>
 </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-primary">Valider</button>
       </div>
     </div>
   </div>
@@ -119,7 +117,7 @@
 
           </div>
         </div>
-        
+
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
